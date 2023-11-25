@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Newtonsoft.Json;
-using Life.Network;
 using Life.CheckpointSystem;
 using Life;
+using System.IO;
 
 namespace MyPoints.Components
 {
@@ -29,19 +29,38 @@ namespace MyPoints.Components
             this.isOpen = isOpen;
             this.allowedBizs = allowedBizs;
             this.positionAxis = positionAxis;
-
-            Create();
         }
 
-        private void Create()
+        public NCheckpoint Build()
         {
-
             NCheckpoint newCheckpoint = new NCheckpoint(playerId, position, delegate
             {
                 Console.WriteLine("Bienvenue dans le checkpoint !");
             });
 
+            return newCheckpoint;
+        }
+
+        public void Create()
+        {
+            NCheckpoint newCheckpoint = Build();
             Nova.server.Players.ForEach(p => p.CreateCheckpoint(newCheckpoint));
+            Save();
+        }
+
+        private void Save()
+        {
+            int number = 0;
+            string filePath;
+
+            do
+            {
+                filePath = Path.Combine(Main.pointsPath, $"point_{slug}_{number}.json");
+                number++;
+            } while (File.Exists(filePath));
+
+            string json = JsonConvert.SerializeObject(this);
+            File.WriteAllText(filePath, json);
         }
     }
 }
