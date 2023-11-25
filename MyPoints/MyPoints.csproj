@@ -6,6 +6,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Reference Include="Assembly-CSharp">
       <HintPath>..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Nova-Life\Nova-Life_Data\Managed\Assembly-CSharp.dll</HintPath>
     </Reference>

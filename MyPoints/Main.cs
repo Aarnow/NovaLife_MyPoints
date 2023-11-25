@@ -1,7 +1,8 @@
 ﻿using Life;
-using Life.CheckpointSystem;
 using Life.Network;
+using MyPoints.Components;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
@@ -20,14 +21,9 @@ namespace MyPoints
 
             new SChatCommand("/mypoints", "Permet d'ouvrir le panel du plugin MyPoints", "/mypoints", (player, arg) =>
                 {
+                    Vector3 position = player.setup.transform.position;
 
-                    Vector3 pos = player.setup.transform.position;
-                    NCheckpoint newCheckpoint = new NCheckpoint(player.setup.areaId, pos, delegate
-                    {
-                        Console.WriteLine("Bienvenue dans le checkpoint !");
-                    });
-
-                    player.CreateCheckpoint(newCheckpoint);
+                    Point newPoint = new Point(player.netId, "mySlug", true, new List<int>(), new float[] { position.x, position.y, position.z });
 
                 }).Register();
             
