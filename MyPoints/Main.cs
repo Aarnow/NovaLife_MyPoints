@@ -2,6 +2,7 @@
 using Life.CheckpointSystem;
 using Life.Network;
 using System;
+using System.IO;
 using UnityEngine;
 
 namespace MyPoints
@@ -15,6 +16,7 @@ namespace MyPoints
         public override void OnPluginInit()
         {
             base.OnPluginInit();
+            InitDirectory();
 
             new SChatCommand("/mypoints", "Permet d'ouvrir le panel du plugin MyPoints", "/mypoints", (player, arg) =>
                 {
@@ -28,8 +30,17 @@ namespace MyPoints
                     player.CreateCheckpoint(newCheckpoint);
 
                 }).Register();
-
+            
             Console.WriteLine($"Plugin \"MyPoints\" initialisé avec succès.");
+        }
+
+        public void InitDirectory()
+        {
+            string directoryPath = pluginsPath + "/MyPoints";
+            string pointsPath = directoryPath + "/Points";
+
+            if (!Directory.Exists(directoryPath)) Directory.CreateDirectory(directoryPath);
+            if (!Directory.Exists(pointsPath)) Directory.CreateDirectory(pointsPath);
         }
     }
 }
