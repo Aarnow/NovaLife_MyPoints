@@ -28,8 +28,16 @@ namespace MyPoints
 
             new SChatCommand("/mypoints", "Permet d'ouvrir le panel du plugin MyPoints", "/mypoints", (player, arg) =>
                 {
+                    /* étapes préliminaires à la création d'un point
+                     * ACTION à réaliser (boutique, téléportation, information)
+                     * DATA à connecter au point (articles de la boutique ? coordoonnées du lieu de tp ? texte ?)
+                     * ALLOWED BIZS à renseigner via une liste des sociétés existantes
+                     * IS OPEN à définir sur VRAI ou FAUX
+                     * NAME et confirmer la création du point aux coordonnées du joueur
+                     */
+
                     Vector3 position = player.setup.transform.position;
-                    Point newPoint = new Point(player.netId, "mySlug", true, new List<int>(), new float[] { position.x, position.y, position.z });
+                    Point newPoint = new Point(player.netId, "mySlug", "Nom du point", "Nom du jeu de données", "Shop", true, new List<int>(), new float[] { position.x, position.y, position.z });
                     newPoint.Create();
                 }).Register();
             

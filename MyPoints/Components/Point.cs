@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 using Life.CheckpointSystem;
 using Life;
 using System.IO;
+using MyPoints.Interfaces;
 
 namespace MyPoints.Components
 {
@@ -13,6 +14,13 @@ namespace MyPoints.Components
     {
         public uint playerId { get; set; }
         public string slug { get; set; }
+        public string name { get; set; }
+        public string dataFilePath { get; set; }
+        public string actionKey { get; set; }
+
+        [JsonIgnore]
+        public IPointAction action { get; set; }
+
         public bool isOpen { get; set; }
         public List<int> allowedBizs { get; set; } = new List<int>();
         [JsonIgnore] public Vector3 position { get; set; }
@@ -22,10 +30,13 @@ namespace MyPoints.Components
             set => position = (value.Length == 3) ? new Vector3(value[0], value[1], value[2]) : position;
         }
 
-        public Point(uint playerId, string slug, bool isOpen, List<int> allowedBizs, float[] positionAxis)
+        public Point(uint playerId, string slug, string name, string dataFilePath, string actionKey, bool isOpen, List<int> allowedBizs, float[] positionAxis)
         {
             this.playerId = playerId;
             this.slug = slug;
+            this.name = name;
+            this.dataFilePath = dataFilePath;
+            this.actionKey = actionKey;
             this.isOpen = isOpen;
             this.allowedBizs = allowedBizs;
             this.positionAxis = positionAxis;
@@ -35,7 +46,7 @@ namespace MyPoints.Components
         {
             NCheckpoint newCheckpoint = new NCheckpoint(playerId, position, delegate
             {
-                Console.WriteLine("Bienvenue dans le checkpoint !");
+                PointActionManager.GetActionByKey(actionKey)?.OnPlayerTrigger();
             });
 
             return newCheckpoint;
@@ -59,7 +70,7 @@ namespace MyPoints.Components
                 number++;
             } while (File.Exists(filePath));
 
-            string json = JsonConvert.SerializeObject(this);
+            string json = JsonConvert.SerializeObject(this, Formatting.Indented);
             File.WriteAllText(filePath, json);
         }
     }
