@@ -36,7 +36,7 @@ namespace MyPoints.Components
         public void CreateData(Player player)
         {
             PTeleportation pTeleportation = new PTeleportation();
-            TeleportationDataPanels.SetTeleportationName(player, pTeleportation);
+            TeleportationDataPanels.SetTeleportationSlug(player, pTeleportation);
         }
 
         public void UpdateProps(string json)

@@ -3,13 +3,12 @@ using Life.UI;
 using Life.Network;
 using MyPoints.Managers;
 using Life;
-using UnityEngine;
 
 namespace MyPoints.Panels.PanelsData
 {
     abstract class TeleportationDataPanels
     {
-        public static void SetTeleportationName(Player player, PTeleportation pTeleportation)
+        public static void SetTeleportationSlug(Player player, PTeleportation pTeleportation)
         {
             UIPanel panel = new UIPanel("MyPoints Menu", UIPanel.PanelType.Input).SetTitle($"Nom de la destination");
 
@@ -37,13 +36,15 @@ namespace MyPoints.Panels.PanelsData
 
             panel.AddButton("Confirmer", (ui) =>
             {
-                pTeleportation.SetPositionAxis(player.setup.transform.position);
-                pTeleportation.Save();
-                UIPanelManager.Quit(ui, player);
+                UIPanelManager.NextPanel(player, ui, () =>
+                {
+                    pTeleportation.SetPositionAxis(player.setup.transform.position);
+                    pTeleportation.Save();
+                });              
             });
             panel.AddButton("Retour", (ui) =>
             {
-                UIPanelManager.NextPanel(player, ui, () => SetTeleportationName(player, pTeleportation));
+                UIPanelManager.NextPanel(player, ui, () => SetTeleportationSlug(player, pTeleportation));
             });
             panel.AddButton("Fermer", (ui) => UIPanelManager.Quit(ui, player));
 
