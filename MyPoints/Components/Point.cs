@@ -8,6 +8,7 @@ using System.IO;
 using MyPoints.Interfaces;
 using static PointActionManager;
 using Life.Network;
+using MyPoints.Managers;
 
 namespace MyPoints.Components
 {
@@ -56,7 +57,16 @@ namespace MyPoints.Components
 
                     NCheckpoint newCheckpoint = new NCheckpoint(playerId, position, delegate
                     {
-                        Action.OnPlayerTrigger(player);
+                        if (isOpen)
+                        {
+                            if(allowedBizs.Count > 0 && allowedBizs.Contains(player.character.BizId) || allowedBizs.Count == 0)
+                            { 
+                                Action.OnPlayerTrigger(player);                   
+                            }
+                            else UIPanelManager.Notification(player, "Accès refusé", "Votre société n'est pas autorisée à intéragir avec ce point.", NotificationManager.Type.Warning);
+                        }
+                        else UIPanelManager.Notification(player, "Accès refusé", "Ce point est actuellement hors service.", NotificationManager.Type.Warning);
+                        
                     });
 
                     return newCheckpoint;
