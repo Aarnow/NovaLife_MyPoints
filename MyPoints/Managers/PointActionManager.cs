@@ -4,15 +4,22 @@ using System.Collections.Generic;
 
 public abstract class PointActionManager
 {
-    private static Dictionary<string, IPointAction> _actions = new Dictionary<string, IPointAction>
+    public enum PointActionKeys
     {
-        { "Teleportation", new PTeleportation()},
-        { "Shop", new PShop()},
-        { "Text", new PText()}
+        Teleportation,
+        Text,
+        Shop
+    }
+
+    public static Dictionary<PointActionKeys, IPointAction> Actions = new Dictionary<PointActionKeys, IPointAction>
+    {
+        { PointActionKeys.Teleportation, new PTeleportation()},
+        { PointActionKeys.Text, new PText()},
+        { PointActionKeys.Shop, new PShop()}
     };
 
-    public static IPointAction GetActionByKey(string key)
+    public static IPointAction GetActionByKey(PointActionKeys key)
     {
-        return _actions.ContainsKey(key) ? _actions[key] : null;
+        return Actions.ContainsKey(key) ? Actions[key] : null;
     }
 }

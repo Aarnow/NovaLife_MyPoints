@@ -1,21 +1,26 @@
 ﻿using Life;
 using Life.CheckpointSystem;
 using Life.DB;
+using Life.UI;
 using Life.Network;
 using Mirror;
-using MyPoints.Components;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using MyPoints.Components;
+using MyPoints.Managers;
+using MyPoints.Panels;
+using static PointActionManager;
 
 namespace MyPoints
 {
     public class Main : Plugin
     {
         public static string directoryPath;
-        public static string pointsPath;
+        public static string pointPath;
+        public static string dataPath;
 
         public Main(IGameAPI api) : base(api)
         {
@@ -28,17 +33,22 @@ namespace MyPoints
 
             new SChatCommand("/mypoints", "Permet d'ouvrir le panel du plugin MyPoints", "/mypoints", (player, arg) =>
                 {
-                    /* étapes préliminaires à la création d'un point
-                     * ACTION à réaliser (boutique, téléportation, information)
-                     * DATA à connecter au point (articles de la boutique ? coordoonnées du lieu de tp ? texte ?)
-                     * ALLOWED BIZS à renseigner via une liste des sociétés existantes
-                     * IS OPEN à définir sur VRAI ou FAUX
-                     * NAME et confirmer la création du point aux coordonnées du joueur
-                     */
+                    UIPanel panel = new UIPanel("MyPoints Menu", UIPanel.PanelType.Tab).SetTitle($"MyPoints Menu");
 
-                    Vector3 position = player.setup.transform.position;
-                    Point newPoint = new Point(player.netId, "mySlug", "Nom du point", "Nom du jeu de données", "Shop", true, new List<int>(), new float[] { position.x, position.y, position.z });
-                    newPoint.Create();
+                    panel.AddTabLine("Ajouter un point", (ui) => ui.selectedTab = 0);
+                    panel.AddTabLine("Modifier un point", (ui) => ui.selectedTab = 1);
+                    panel.AddTabLine("Créer un jeu de données", (ui) => ui.selectedTab = 2);
+
+                    panel.AddButton("Sélection", (ui) =>
+                    {
+                        if (ui.selectedTab == 0) UIPanelManager.NextPanel(player, ui, () => NewPointPanels.SetAction(player));
+                        else if (ui.selectedTab == 1) Console.WriteLine("Modifier un point - Voir la liste des points");
+                        else if (ui.selectedTab == 2) UIPanelManager.NextPanel(player, ui, () => NewDataPanels.Action(player));
+                        else UIPanelManager.Notification(player, "Erreur", "Vous devez sélectionner un choix", NotificationManager.Type.Error);
+                    });
+                    panel.AddButton("Fermer", (ui) => UIPanelManager.Quit(ui, player));
+
+                    player.ShowPanelUI(panel);
                 }).Register();
             
             Console.WriteLine($"Plugin \"MyPoints\" initialisé avec succès.");
@@ -51,7 +61,7 @@ namespace MyPoints
 
             try
             {
-                string[] jsonFiles = Directory.GetFiles(pointsPath, "*.json");
+                string[] jsonFiles = Directory.GetFiles(pointPath, "*.json");
                 foreach (string jsonFile in jsonFiles)
                 {
                     string json = File.ReadAllText(jsonFile);
@@ -69,10 +79,18 @@ namespace MyPoints
         public void InitDirectory()
         {
             directoryPath = pluginsPath + "/MyPoints";
-            pointsPath = directoryPath + "/Points";
+            pointPath = directoryPath + "/Point";
+            dataPath = directoryPath + "/Data";
 
             if (!Directory.Exists(directoryPath)) Directory.CreateDirectory(directoryPath);
-            if (!Directory.Exists(pointsPath)) Directory.CreateDirectory(pointsPath);
+            if (!Directory.Exists(pointPath)) Directory.CreateDirectory(pointPath);
+            if (!Directory.Exists(dataPath)) Directory.CreateDirectory(dataPath);
+
+            foreach (var pair in PointActionManager.Actions)
+            {
+                string dataActionPath = dataPath + "/" + pair.Key;
+                if (!Directory.Exists(dataActionPath)) Directory.CreateDirectory(dataActionPath);
+            }
         }
     }
 }

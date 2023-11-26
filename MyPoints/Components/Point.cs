@@ -6,6 +6,7 @@ using Life.CheckpointSystem;
 using Life;
 using System.IO;
 using MyPoints.Interfaces;
+using static PointActionManager;
 
 namespace MyPoints.Components
 {
@@ -16,7 +17,7 @@ namespace MyPoints.Components
         public string slug { get; set; }
         public string name { get; set; }
         public string dataFilePath { get; set; }
-        public string actionKey { get; set; }
+        public PointActionKeys actionKey { get; set; }
 
         [JsonIgnore]
         public IPointAction action { get; set; }
@@ -30,7 +31,7 @@ namespace MyPoints.Components
             set => position = (value.Length == 3) ? new Vector3(value[0], value[1], value[2]) : position;
         }
 
-        public Point(uint playerId, string slug, string name, string dataFilePath, string actionKey, bool isOpen, List<int> allowedBizs, float[] positionAxis)
+        public Point(uint playerId, string slug, string name, string dataFilePath, PointActionKeys actionKey, bool isOpen, List<int> allowedBizs, float[] positionAxis)
         {
             this.playerId = playerId;
             this.slug = slug;
@@ -66,7 +67,7 @@ namespace MyPoints.Components
 
             do
             {
-                filePath = Path.Combine(Main.pointsPath, $"point_{slug}_{number}.json");
+                filePath = Path.Combine(Main.pointPath, $"point_{slug}_{number}.json");
                 number++;
             } while (File.Exists(filePath));
 
