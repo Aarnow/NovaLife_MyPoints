@@ -1,5 +1,6 @@
 ﻿using Life.Network;
 using MyPoints.Interfaces;
+using Newtonsoft.Json;
 using System;
 using static PointActionManager;
 
@@ -13,13 +14,17 @@ namespace MyPoints.Components
             ActionKeys = PointActionKeys.Text;
         }
 
-        public void OnPlayerTrigger()
+        public void OnPlayerTrigger(Player player)
         {
             Console.WriteLine("Boutique ouverte");
         }
 
         public void CreateData(Player player)
         {
+        }
+        public void UpdateProps(string json)
+        {
+            JsonConvert.PopulateObject(json, this);
         }
     }
 }

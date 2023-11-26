@@ -1,5 +1,6 @@
 ﻿using Life.Network;
 using MyPoints.Interfaces;
+using Newtonsoft.Json;
 using System;
 using static PointActionManager;
 
@@ -16,7 +17,7 @@ namespace MyPoints.Components
             ActionKeys = PointActionKeys.Text;
         }
 
-        public void OnPlayerTrigger()
+        public void OnPlayerTrigger(Player player)
         {
             Console.WriteLine("Afficher le panel textuel");
         }
@@ -24,6 +25,11 @@ namespace MyPoints.Components
         public void CreateData(Player player)
         {
             Console.WriteLine("création des données pour un point textuel");
+        }
+
+        public void UpdateProps(string json)
+        {
+            JsonConvert.PopulateObject(json, this);
         }
     }
 }

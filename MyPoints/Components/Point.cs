@@ -7,6 +7,7 @@ using Life;
 using System.IO;
 using MyPoints.Interfaces;
 using static PointActionManager;
+using Life.Network;
 
 namespace MyPoints.Components
 {
@@ -43,21 +44,42 @@ namespace MyPoints.Components
             this.positionAxis = positionAxis;
         }
 
-        public NCheckpoint Build()
-        {
-            NCheckpoint newCheckpoint = new NCheckpoint(playerId, position, delegate
+        public NCheckpoint Build(Player player)
+        {  
+            try
             {
-                PointActionManager.GetActionByKey(actionKey)?.OnPlayerTrigger();
-            });
+                string json = File.ReadAllText(dataFilePath);
+                IPointAction Action = GetActionByKey(actionKey);
+                if (Action != null)
+                {
+                    Action.UpdateProps(json);
 
-            return newCheckpoint;
+                    NCheckpoint newCheckpoint = new NCheckpoint(playerId, position, delegate
+                    {
+                        Action.OnPlayerTrigger(player);
+                    });
+
+                    return newCheckpoint;
+                } 
+                else throw new Exception("Erreur: Action est null");
+                
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Erreur lors de la lecture du fichier JSON : {ex.Message}");
+                return null;
+            }
         }
 
-        public void Create()
+        public void Create(Player player)
         {
-            NCheckpoint newCheckpoint = Build();
-            Nova.server.Players.ForEach(p => p.CreateCheckpoint(newCheckpoint));
-            Save();
+            NCheckpoint newCheckpoint = Build(player);
+            if (newCheckpoint != null)
+            {
+                Nova.server.Players.ForEach(p => p.CreateCheckpoint(newCheckpoint));
+                Save();
+            }
+            else Console.WriteLine("Erreur lors du build d'un point.");
         }
 
         private void Save()

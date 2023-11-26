@@ -12,6 +12,7 @@ namespace MyPoints.Components
     [Serializable]
     public class PTeleportation : IPointAction
     {
+        [JsonIgnore]
         public PointActionKeys ActionKeys { get; set; }
         public string Slug { get; set; }
         public float X { get; set; }
@@ -27,22 +28,20 @@ namespace MyPoints.Components
             Z = z;
         }
 
-        public void OnPlayerTrigger()
+        public void OnPlayerTrigger(Player player)
         {
-            Console.WriteLine("Action téléportation");
-        }
-
-        public void SetPositionAxis(Vector3 position)
-        {
-            X = position.x;
-            Y = position.y;
-            Z = position.z;
+            player.setup.TargetSetPosition(new Vector3(X, Y, Z));
         }
 
         public void CreateData(Player player)
         {
             PTeleportation pTeleportation = new PTeleportation();
             TeleportationDataPanels.SetTeleportationName(player, pTeleportation);
+        }
+
+        public void UpdateProps(string json)
+        {
+            JsonConvert.PopulateObject(json, this);
         }
 
         public void Save()
@@ -58,6 +57,13 @@ namespace MyPoints.Components
 
             string json = JsonConvert.SerializeObject(this, Formatting.Indented);
             File.WriteAllText(filePath, json);
+        }
+
+        public void SetPositionAxis(Vector3 position)
+        {
+            X = position.x;
+            Y = position.y;
+            Z = position.z;
         }
     }
 }

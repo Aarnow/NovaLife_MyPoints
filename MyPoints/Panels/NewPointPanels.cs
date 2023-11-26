@@ -139,7 +139,7 @@ namespace MyPoints.Panels
                         pointDto.Name = ui.inputText;
                         Vector3 position = player.setup.transform.position;
                         Point newPoint = new Point(player.netId, pointDto.ActionKey+"_"+pointDto.Name, pointDto.Name, pointDto.DataFilePath, pointDto.ActionKey, pointDto.IsOpen, pointDto.AllowedBizs, new float[] { position.x, position.y, position.z });
-                        newPoint.Create();
+                        newPoint.Create(player);
                         UIPanelManager.Notification(player, "Succès", "Votre point est prêt.", NotificationManager.Type.Success);
                     } else UIPanelManager.Notification(player, "Erreur", "Veuillez nommer votre point.", NotificationManager.Type.Error);
 

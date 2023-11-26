@@ -6,7 +6,8 @@ namespace MyPoints.Interfaces
     public interface IPointAction
     {
         PointActionKeys ActionKeys { get; set; }
-        void OnPlayerTrigger();
+        void OnPlayerTrigger(Player player);
         void CreateData(Player player);
+        void UpdateProps(string json);
     }
 }

@@ -6,9 +6,7 @@ using Life.Network;
 using Mirror;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using UnityEngine;
 using MyPoints.Components;
 using MyPoints.Managers;
 using MyPoints.Panels;
@@ -58,7 +56,6 @@ namespace MyPoints
         {
             base.OnPlayerSpawnCharacter(player, conn, character);
 
-
             try
             {
                 string[] jsonFiles = Directory.GetFiles(pointPath, "*.json");
@@ -66,7 +63,7 @@ namespace MyPoints
                 {
                     string json = File.ReadAllText(jsonFile);
                     Point point = JsonConvert.DeserializeObject<Point>(json);
-                    NCheckpoint newCheckpoint = point.Build();
+                    NCheckpoint newCheckpoint = point.Build(player);
                     player.CreateCheckpoint(newCheckpoint);
                 }
             }
