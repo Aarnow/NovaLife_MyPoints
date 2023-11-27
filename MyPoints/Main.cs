@@ -10,7 +10,6 @@ using System.IO;
 using MyPoints.Components;
 using MyPoints.Managers;
 using MyPoints.Panels;
-using static PointActionManager;
 
 namespace MyPoints
 {
@@ -31,22 +30,27 @@ namespace MyPoints
 
             new SChatCommand("/mypoints", "Permet d'ouvrir le panel du plugin MyPoints", "/mypoints", (player, arg) =>
                 {
-                    UIPanel panel = new UIPanel("MyPoints Menu", UIPanel.PanelType.Tab).SetTitle($"MyPoints Menu");
-
-                    panel.AddTabLine("Ajouter un point", (ui) => ui.selectedTab = 0);
-                    panel.AddTabLine("Modifier un point", (ui) => ui.selectedTab = 1);
-                    panel.AddTabLine("Créer un jeu de données", (ui) => ui.selectedTab = 2);
-
-                    panel.AddButton("Sélection", (ui) =>
+                    if (player.IsAdmin)
                     {
-                        if (ui.selectedTab == 0) UIPanelManager.NextPanel(player, ui, () => NewPointPanels.SetAction(player));
-                        else if (ui.selectedTab == 1) Console.WriteLine("Modifier un point - Voir la liste des points");
-                        else if (ui.selectedTab == 2) UIPanelManager.NextPanel(player, ui, () => NewDataPanels.Action(player));
-                        else UIPanelManager.Notification(player, "Erreur", "Vous devez sélectionner un choix", NotificationManager.Type.Error);
-                    });
-                    panel.AddButton("Fermer", (ui) => UIPanelManager.Quit(ui, player));
+                        UIPanel panel = new UIPanel("MyPoints Menu", UIPanel.PanelType.Tab).SetTitle($"MyPoints Menu");
 
-                    player.ShowPanelUI(panel);
+                        panel.AddTabLine("Ajouter un point", (ui) => ui.selectedTab = 0);
+                        panel.AddTabLine("Supprimer un point", (ui) => ui.selectedTab = 1);
+                        panel.AddTabLine("Créer un jeu de données", (ui) => ui.selectedTab = 2);
+
+                        panel.AddButton("Sélection", (ui) =>
+                        {
+                            if (ui.selectedTab == 0) UIPanelManager.NextPanel(player, ui, () => PointPanels.SetAction(player));
+                            else if (ui.selectedTab == 1) Console.WriteLine("Supprimer un point - Voir la liste des points");
+                            else if (ui.selectedTab == 2) UIPanelManager.NextPanel(player, ui, () => DataPanels.Action(player));
+                            else UIPanelManager.Notification(player, "Erreur", "Vous devez sélectionner un choix", NotificationManager.Type.Error);
+                        });
+                        panel.AddButton("Fermer", (ui) => UIPanelManager.Quit(ui, player));
+
+                        player.ShowPanelUI(panel);
+                    }
+                    else UIPanelManager.Notification(player, "Avertissement", "Vous n'avez pas l'autorisation d'accéder à cette commande.", NotificationManager.Type.Error);
+                    
                 }).Register();
             
             Console.WriteLine($"Plugin \"MyPoints\" initialisé avec succès.");

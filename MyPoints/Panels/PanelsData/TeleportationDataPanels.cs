@@ -40,6 +40,7 @@ namespace MyPoints.Panels.PanelsData
                 {
                     pTeleportation.SetPositionAxis(player.setup.transform.position);
                     pTeleportation.Save();
+                    UIPanelManager.Notification(player, "Succès", "Les données de votre téléporteur ont bien été sauvegardées.", NotificationManager.Type.Success);
                 });              
             });
             panel.AddButton("Retour", (ui) =>

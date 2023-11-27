@@ -59,6 +59,11 @@ namespace MyPoints.Components
             File.WriteAllText(filePath, json);
         }
 
+        public object Clone()
+        {
+            return new PTeleportation();
+        }
+
         public void SetPositionAxis(Vector3 position)
         {
             X = position.x;

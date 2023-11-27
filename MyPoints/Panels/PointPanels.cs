@@ -15,7 +15,7 @@ using static PointActionManager;
 
 namespace MyPoints.Panels
 {
-    abstract class NewPointPanels
+    abstract class PointPanels
     {
         public static void SetAction(Player player)
         {

@@ -14,7 +14,7 @@ using static PointActionManager;
 
 namespace MyPoints.Panels
 {
-    abstract class NewDataPanels
+    abstract class DataPanels
     {
         public static void Action(Player player)
         {

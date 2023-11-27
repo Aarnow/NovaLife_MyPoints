@@ -1,10 +1,11 @@
 ﻿using Life.Network;
 using Newtonsoft.Json;
+using System;
 using static PointActionManager;
 
 namespace MyPoints.Interfaces
 {
-    public interface IPointAction
+    public interface IPointAction : ICloneable
     {
         PointActionKeys ActionKeys { get; set; }
         string Slug { get; set; }

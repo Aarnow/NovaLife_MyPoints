@@ -57,5 +57,9 @@ namespace MyPoints.Components
             string json = JsonConvert.SerializeObject(this, Formatting.Indented);
             File.WriteAllText(filePath, json);
         }
+        public object Clone()
+        {
+            return new PText();
+        }
     }
 }

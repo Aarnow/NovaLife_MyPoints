@@ -46,6 +46,7 @@ namespace MyPoints.Panels.PanelsData
                     {
                         pText.Content = ui.inputText;
                         pText.Save();
+                        UIPanelManager.Notification(player, "Succès", "Les données de votre panel textuel ont bien été sauvegardées.", NotificationManager.Type.Success);
                     });
                 }
                 else UIPanelManager.Notification(player, "Erreur", $"Votre texte ne respecte pas la limite de caractères. ({ui.inputText.Length}/{max})", NotificationManager.Type.Error);

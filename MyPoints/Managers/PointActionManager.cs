@@ -20,6 +20,6 @@ public abstract class PointActionManager
 
     public static IPointAction GetActionByKey(PointActionKeys key)
     {
-        return Actions.ContainsKey(key) ? Actions[key] : null;
+        return Actions.ContainsKey(key) ? (IPointAction)Actions[key].Clone() : null;
     }
 }
