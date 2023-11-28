@@ -10,6 +10,7 @@ using MyPoints.Components;
 using MyPoints.DTO;
 using MyPoints.Interfaces;
 using MyPoints.Managers;
+using Newtonsoft.Json;
 using UnityEngine;
 using static PointActionManager;
 
@@ -146,6 +147,37 @@ namespace MyPoints.Panels
                 });
             });
             panel.AddButton("Retour", (ui) => UIPanelManager.NextPanel(player, ui, () => SetIsOpen(player, pointDto)));
+            panel.AddButton("Fermer", (ui) => UIPanelManager.Quit(ui, player));
+
+            player.ShowPanelUI(panel);
+        }
+
+        public static void PointList(Player player)
+        {
+            string[] jsonFiles = Directory.GetFiles(Main.pointPath, "*.json");
+           
+
+            UIPanel panel = new UIPanel("MyPoints Menu", UIPanel.PanelType.Tab).SetTitle("Supprimer un point");
+
+            foreach ((string jsonFile, int index) in jsonFiles.Select((jsonFile, index) => (jsonFile, index)))
+            {
+                panel.AddTabLine($"{Path.GetFileNameWithoutExtension(jsonFile)}", (ui) => ui.selectedTab = index);
+            }
+
+
+            panel.AddButton("Téléportation", (ui) =>
+            {
+                string json = File.ReadAllText(jsonFiles[ui.selectedTab]);
+                Point point = JsonConvert.DeserializeObject<Point>(json);
+                player.setup.TargetSetPosition(new Vector3(point.Position.x, point.Position.y, point.Position.z));
+            });
+            panel.AddButton("Supprimer", (ui) =>
+            {
+                string json = File.ReadAllText(jsonFiles[ui.selectedTab]);
+                Point point = JsonConvert.DeserializeObject<Point>(json);
+                if(point != null) point.Delete(player);
+                UIPanelManager.NextPanel(player, ui, () => PointList(player));
+            });
             panel.AddButton("Fermer", (ui) => UIPanelManager.Quit(ui, player));
 
             player.ShowPanelUI(panel);

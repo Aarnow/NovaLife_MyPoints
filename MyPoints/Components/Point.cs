@@ -15,51 +15,51 @@ namespace MyPoints.Components
     [Serializable]
     public class Point
     {
-        public uint playerId { get; set; }
-        public string slug { get; set; }
-        public string name { get; set; }
-        public string dataFilePath { get; set; }
-        public PointActionKeys actionKey { get; set; }
+        public uint PlayerId { get; set; }
+        public string Slug { get; set; }
+        public string Name { get; set; }
+        public string DataFilePath { get; set; }
+        public PointActionKeys ActionKey { get; set; }
 
         [JsonIgnore]
-        public IPointAction action { get; set; }
+        public IPointAction Action { get; set; }
 
-        public bool isOpen { get; set; }
-        public List<int> allowedBizs { get; set; } = new List<int>();
-        [JsonIgnore] public Vector3 position { get; set; }
-        public float[] positionAxis
+        public bool IsOpen { get; set; }
+        public List<int> AllowedBizs { get; set; } = new List<int>();
+        [JsonIgnore] public Vector3 Position { get; set; }
+        public float[] PositionAxis
         {
-            get => new float[] { position.x, position.y, position.z };
-            set => position = (value.Length == 3) ? new Vector3(value[0], value[1], value[2]) : position;
+            get => new float[] { Position.x, Position.y, Position.z };
+            set => Position = (value.Length == 3) ? new Vector3(value[0], value[1], value[2]) : Position;
         }
 
         public Point(uint playerId, string slug, string name, string dataFilePath, PointActionKeys actionKey, bool isOpen, List<int> allowedBizs, float[] positionAxis)
         {
-            this.playerId = playerId;
-            this.slug = slug;
-            this.name = name;
-            this.dataFilePath = dataFilePath;
-            this.actionKey = actionKey;
-            this.isOpen = isOpen;
-            this.allowedBizs = allowedBizs;
-            this.positionAxis = positionAxis;
+            this.PlayerId = playerId;
+            this.Slug = slug;
+            this.Name = name;
+            this.DataFilePath = dataFilePath;
+            this.ActionKey = actionKey;
+            this.IsOpen = isOpen;
+            this.AllowedBizs = allowedBizs;
+            this.PositionAxis = positionAxis;
         }
 
         public NCheckpoint Build(Player player)
         {  
             try
             {
-                string json = File.ReadAllText(dataFilePath);
-                IPointAction Action = GetActionByKey(actionKey);
+                string json = File.ReadAllText(DataFilePath);
+                IPointAction Action = GetActionByKey(ActionKey);
                 if (Action != null)
                 {
                     Action.UpdateProps(json);
 
-                    NCheckpoint newCheckpoint = new NCheckpoint(playerId, position, delegate
+                    NCheckpoint newCheckpoint = new NCheckpoint(PlayerId, Position, delegate
                     {
-                        if (isOpen)
+                        if (IsOpen)
                         {
-                            if(allowedBizs.Count > 0 && allowedBizs.Contains(player.character.BizId) || allowedBizs.Count == 0)
+                            if(AllowedBizs.Count > 0 && AllowedBizs.Contains(player.character.BizId) || AllowedBizs.Count == 0)
                             { 
                                 Action.OnPlayerTrigger(player);                   
                             }
@@ -92,6 +92,19 @@ namespace MyPoints.Components
             else Console.WriteLine("Erreur lors du build d'un point.");
         }
 
+        public void Delete(Player player)
+        {
+            string path = Main.pointPath + "/Point_" + Slug + ".json";
+            Console.WriteLine(path);
+            if (File.Exists(path)) File.Delete(path);
+
+            foreach (NCheckpoint checkpoint in Nova.server.checkpoints)
+                if (checkpoint.position == Position)
+                    foreach (Player p in Nova.server.GetAllInGamePlayers())
+                        p.DestroyCheckpoint(checkpoint);
+            UIPanelManager.Notification(player, "Succès", "Le point à bien été supprimé.", NotificationManager.Type.Success);
+        }
+
         private void Save()
         {
             int number = 0;
@@ -99,7 +112,8 @@ namespace MyPoints.Components
 
             do
             {
-                filePath = Path.Combine(Main.pointPath, $"point_{slug}_{number}.json");
+                Slug += $"_{number}";
+                filePath = Path.Combine(Main.pointPath, $"Point_{Slug}.json");
                 number++;
             } while (File.Exists(filePath));
 

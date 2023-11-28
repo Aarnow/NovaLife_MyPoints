@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Linq;
 using MyPoints.Managers;
 using Life.InventorySystem;
-using Microsoft.SqlServer.Server;
 
 namespace MyPoints.Components
 {

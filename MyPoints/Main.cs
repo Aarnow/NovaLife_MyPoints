@@ -41,7 +41,7 @@ namespace MyPoints
                         panel.AddButton("Sélection", (ui) =>
                         {
                             if (ui.selectedTab == 0) UIPanelManager.NextPanel(player, ui, () => PointPanels.SetAction(player));
-                            else if (ui.selectedTab == 1) Console.WriteLine("Supprimer un point - Voir la liste des points");
+                            else if (ui.selectedTab == 1) UIPanelManager.NextPanel(player, ui, () => PointPanels.PointList(player));
                             else if (ui.selectedTab == 2) UIPanelManager.NextPanel(player, ui, () => DataPanels.Action(player));
                             else UIPanelManager.Notification(player, "Erreur", "Vous devez sélectionner un choix", NotificationManager.Type.Error);
                         });

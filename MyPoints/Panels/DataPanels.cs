@@ -1,10 +1,6 @@
-﻿
-
-using Life;
+﻿using Life;
 using Life.Network;
 using Life.UI;
-using MyPoints.Components;
-using MyPoints.DTO;
 using MyPoints.Interfaces;
 using MyPoints.Managers;
 using System;
