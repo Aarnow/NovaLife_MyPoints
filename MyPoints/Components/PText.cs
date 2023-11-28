@@ -4,7 +4,6 @@ using MyPoints.Interfaces;
 using MyPoints.Managers;
 using MyPoints.Panels.PanelsData;
 using Newtonsoft.Json;
-using System;
 using System.IO;
 using static PointActionManager;
 

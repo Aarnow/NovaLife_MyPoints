@@ -1,12 +1,10 @@
 ﻿using Life;
-using Life.InventorySystem;
 using Life.Network;
 using Life.UI;
 using MyPoints.Components;
 using MyPoints.Managers;
 using System;
 using System.Linq;
-using static RTG.ObjectAlign;
 
 namespace MyPoints.Panels.PanelsData
 {
