@@ -1,2 +1,2 @@
-MyPoints.dll export-subst
 * export-ignore
+!/Plugin/** export-subst
