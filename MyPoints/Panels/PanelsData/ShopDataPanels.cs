@@ -81,7 +81,7 @@ namespace MyPoints.Panels.PanelsData
                 }
                 else UIPanelManager.Notification(player, "Erreur", "Vous devez respecter le format et ne fournir que l'ID et le prix.\nID [ESPACE] PRIX", NotificationManager.Type.Error);
             });
-            panel.AddButton("Retour", (ui) => UIPanelManager.Quit(ui, player));
+            panel.AddButton("Retour", (ui) => UIPanelManager.NextPanel(player, ui, () => SetItemList(player, pShop)));
 
             player.ShowPanelUI(panel);
         }

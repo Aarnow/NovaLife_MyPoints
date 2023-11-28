@@ -35,6 +35,7 @@ namespace MyPoints.Panels
                     SetData(player, pointDto);
                 });
             });
+            panel.AddButton("Retour", (ui) => UIPanelManager.NextPanel(player, ui, ()=> MainPanel.OpenMyPointsMenu(player)));
             panel.AddButton("Fermer", (ui) => UIPanelManager.Quit(ui, player));
 
             player.ShowPanelUI(panel);
@@ -178,6 +179,7 @@ namespace MyPoints.Panels
                 if(point != null) point.Delete(player);
                 UIPanelManager.NextPanel(player, ui, () => PointList(player));
             });
+            panel.AddButton("Retour", (ui) => UIPanelManager.NextPanel(player, ui, () => MainPanel.OpenMyPointsMenu(player)));
             panel.AddButton("Fermer", (ui) => UIPanelManager.Quit(ui, player));
 
             player.ShowPanelUI(panel);

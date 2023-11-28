@@ -31,6 +31,7 @@ namespace MyPoints.Panels
                     else UIPanelManager.Notification(player, "Erreur", "Constructeur introuvable pour ce type de données", NotificationManager.Type.Error);
                 });
             });
+            panel.AddButton("Retour", (ui) => UIPanelManager.NextPanel(player, ui, () => MainPanel.OpenMyPointsMenu(player)));
             panel.AddButton("Fermer", (ui) => UIPanelManager.Quit(ui, player));
 
             player.ShowPanelUI(panel);

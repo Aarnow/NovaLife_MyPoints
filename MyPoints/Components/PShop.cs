@@ -62,7 +62,7 @@ namespace MyPoints.Components
                     {
                         if (player.character.Money >= shopItem.Price * amount)
                         {
-                            if (!player.setup.inventory.AddItem(shopItem.ItemId, amount, "")) //TO DO: Data prop
+                            if (!player.setup.inventory.AddItem(shopItem.ItemId, amount, shopItem.Data))
                             {
                                 UIPanelManager.Notification(player, "Erreur", "Vous n'avez pas suffisament de place dans votre inventaire.", NotificationManager.Type.Error);
                             }    
