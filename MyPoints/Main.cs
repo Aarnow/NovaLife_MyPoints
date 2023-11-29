@@ -1,7 +1,6 @@
 ﻿using Life;
 using Life.CheckpointSystem;
 using Life.DB;
-using Life.UI;
 using Life.Network;
 using Mirror;
 using Newtonsoft.Json;

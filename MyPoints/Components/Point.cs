@@ -55,7 +55,7 @@ namespace MyPoints.Components
                 {
                     Action.UpdateProps(json);
 
-                    NCheckpoint newCheckpoint = new NCheckpoint(PlayerId, Position, delegate
+                    NCheckpoint newCheckpoint = new NCheckpoint(player.setup.netId, Position, delegate
                     {
                         if (IsOpen)
                         {
@@ -82,14 +82,14 @@ namespace MyPoints.Components
         }
 
         public void Create(Player player)
-        {
-            NCheckpoint newCheckpoint = Build(player);
-            if (newCheckpoint != null)
-            {
-                Nova.server.Players.ForEach(p => p.CreateCheckpoint(newCheckpoint));
+        {        
+                Nova.server.Players.ForEach(p =>
+                {
+                    NCheckpoint newCheckpoint = Build(p);
+                    if (newCheckpoint != null)  p.CreateCheckpoint(newCheckpoint);
+                    else Console.WriteLine("Erreur lors du build d'un point.");
+                });
                 Save();
-            }
-            else Console.WriteLine("Erreur lors du build d'un point.");
         }
 
         public void Delete(Player player)
