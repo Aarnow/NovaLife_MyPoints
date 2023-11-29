@@ -144,7 +144,6 @@ namespace MyPoints.Panels
                         newPoint.Create(player);
                         UIPanelManager.Notification(player, "Succès", "Votre point est prêt.", NotificationManager.Type.Success);
                     } else UIPanelManager.Notification(player, "Erreur", "Veuillez nommer votre point.", NotificationManager.Type.Error);
-
                 });
             });
             panel.AddButton("Retour", (ui) => UIPanelManager.NextPanel(player, ui, () => SetIsOpen(player, pointDto)));
