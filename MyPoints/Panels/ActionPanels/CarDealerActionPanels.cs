@@ -42,9 +42,9 @@ namespace MyPoints.Panels.ActionPanels
                     UIPanelManager.NextPanel(player, ui, () =>
                     {
                         LifeDB.CreateVehicle(carDealerVehicle.ModelId, $"{{\"owner\":{{\"groupId\":0,\"characterId\":{player.character.Id}}},\"coOwners\":[]}}");
-                        UIPanelManager.Notification(player, "Succès", $"Félicitation, vous venez d'acquérir le véhicule modèle: \"{carDealerVehicle.Vehicle.vehicleName}\" pour {carDealerVehicle.Price}€", NotificationManager.Type.Success);
+                        UIPanelManager.Notification(player, "Succès", $"Félicitation, vous venez d'acquérir le véhicule modèle: \"{carDealerVehicle.Vehicle.vehicleName}\" pour {carDealerVehicle.Price}€.", NotificationManager.Type.Success);
                         player.AddMoney(-carDealerVehicle.Price, "transaction");
-                        pCarDealer.OnPlayerTrigger(player);
+                        PurchaseCompleted(player, pCarDealer, carDealerVehicle);
                     });
                 }
                 else
@@ -57,6 +57,18 @@ namespace MyPoints.Panels.ActionPanels
                 };
             }));
             panel.AddButton("Annuler", (ui) => UIPanelManager.NextPanel(player, ui, () => pCarDealer.OnPlayerTrigger(player)));
+            panel.AddButton("Fermer", (ui) => UIPanelManager.Quit(ui, player));
+
+            player.ShowPanelUI(panel);
+        }
+
+        public static void PurchaseCompleted(Player player, PCarDealer pCarDealer, CarDealerVehicle carDealerVehicle)
+        {
+            UIPanel panel = new UIPanel("MyPoints Menu", UIPanel.PanelType.Text).SetTitle($"Félicitation");
+
+            panel.text = $"Votre véhicule modèle: \"{carDealerVehicle.Vehicle.name}\" est disponible dans votre garage virtuel.\nRendez-vous chez votre concessionnaire !";
+
+            panel.AddButton("Boutique", (ui) => UIPanelManager.NextPanel(player, ui, () => pCarDealer.OnPlayerTrigger(player)));
             panel.AddButton("Fermer", (ui) => UIPanelManager.Quit(ui, player));
 
             player.ShowPanelUI(panel);

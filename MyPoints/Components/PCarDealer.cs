@@ -1,15 +1,10 @@
-﻿using Life;
-using Life.DB;
-using Life.Network;
-using Life.UI;
+﻿using Life.Network;
 using MyPoints.Interfaces;
-using MyPoints.Managers;
 using MyPoints.Panels.ActionPanels;
 using MyPoints.Panels.PanelsData;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using static PointActionManager;
 
 namespace MyPoints.Components
