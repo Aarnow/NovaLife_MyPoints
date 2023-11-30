@@ -29,7 +29,7 @@ namespace MyPoints.Panels.PanelsData
 
             foreach((ShopItem shopItem, int index) in pShop.shopItems.Select((shopItem, index)=>(shopItem, index)))
             {
-                panel.AddTabLine($"{shopItem.Item.itemName}",shopItem.Price.ToString("F2") + "€",shopItem.ItemIconId, (ui) =>{ui.selectedTab = 0;});
+                panel.AddTabLine($"{shopItem.Item.itemName}",shopItem.Price.ToString("F2") + "€",shopItem.ItemIconId, (ui) =>{ui.selectedTab = index;});
             }
 
             panel.AddButton("Ajouter", (ui) => UIPanelManager.NextPanel(player, ui, () => AddItem(player, pShop)));
@@ -47,7 +47,7 @@ namespace MyPoints.Panels.PanelsData
         public static void AddItem(Player player, PShop pShop, bool buyable = true, bool resellable = true)
         {
 
-            UIPanel panel = new UIPanel("MyPoints Menu", UIPanel.PanelType.Input).SetTitle($"Aperçu de votre boutique");
+            UIPanel panel = new UIPanel("MyPoints Menu", UIPanel.PanelType.Input).SetTitle($"Ajouter un objet");
 
             panel.inputPlaceholder = "ID de l'objet [ESPACE] Prix de l'objet";
 

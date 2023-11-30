@@ -1,8 +1,15 @@
-﻿
+﻿using Life;
+using Life.DB;
 using Life.Network;
+using Life.UI;
 using MyPoints.Interfaces;
+using MyPoints.Managers;
+using MyPoints.Panels.ActionPanels;
 using MyPoints.Panels.PanelsData;
 using Newtonsoft.Json;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using static PointActionManager;
 
 namespace MyPoints.Components
@@ -11,15 +18,17 @@ namespace MyPoints.Components
     {
         public PointActionKeys ActionKeys { get; set; }
         public string Slug { get; set; }
+        public List<CarDealerVehicle> carDealerVehicles { get; set; }
 
         public PCarDealer()
         {
-
+            ActionKeys = PointActionKeys.CarDealer;
+            carDealerVehicles = new List<CarDealerVehicle>();
         }
 
         public void OnPlayerTrigger(Player player)
         {
-
+            CarDealerActionPanels.CarDealerVehiculeList(player, this);
         }
 
         public void CreateData(Player player)
@@ -35,6 +44,17 @@ namespace MyPoints.Components
 
         public void Save()
         {
+            int number = 0;
+            string filePath;
+
+            do
+            {
+                filePath = Path.Combine(Main.dataPath + "/" + ActionKeys, $"{ActionKeys}_{Slug}_{number}.json");
+                number++;
+            } while (File.Exists(filePath));
+
+            string json = JsonConvert.SerializeObject(this, Formatting.Indented);
+            File.WriteAllText(filePath, json);
         }
 
         public object Clone()

@@ -8,14 +8,16 @@ public abstract class PointActionManager
     {
         Teleportation,
         Text,
-        Shop
+        Shop,
+        CarDealer,
     }
 
     public static Dictionary<PointActionKeys, IPointAction> Actions = new Dictionary<PointActionKeys, IPointAction>
     {
         { PointActionKeys.Teleportation, new PTeleportation()},
         { PointActionKeys.Text, new PText()},
-        { PointActionKeys.Shop, new PShop()}
+        { PointActionKeys.Shop, new PShop()},
+        { PointActionKeys.CarDealer, new PCarDealer()},
     };
 
     public static IPointAction GetActionByKey(PointActionKeys key)
