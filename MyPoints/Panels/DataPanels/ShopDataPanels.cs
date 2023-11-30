@@ -1,7 +1,7 @@
 ﻿using Life;
 using Life.Network;
 using Life.UI;
-using MyPoints.Components;
+using MyPoints.Components.ShopPoint;
 using MyPoints.Managers;
 using System;
 using System.Linq;

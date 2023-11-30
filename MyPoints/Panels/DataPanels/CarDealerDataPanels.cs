@@ -2,7 +2,7 @@
 using Life.Network;
 using Life.UI;
 using Life.VehicleSystem;
-using MyPoints.Components;
+using MyPoints.Components.CarDealerPoint;
 using MyPoints.Managers;
 using System;
 using System.Linq;
@@ -108,6 +108,7 @@ namespace MyPoints.Panels.PanelsData
 
             player.ShowPanelUI(panel);
         }
+
         public static void SetVehicleListDEBUG(Player player, PCarDealer pCarDealer)
         {
             UIPanel panel = new UIPanel("MyPoints Menu", UIPanel.PanelType.TabPrice).SetTitle($"Sélectionner un véhicule");

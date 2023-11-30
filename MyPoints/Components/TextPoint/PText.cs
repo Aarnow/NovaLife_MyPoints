@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 using System.IO;
 using static PointActionManager;
 
-namespace MyPoints.Components
+namespace MyPoints.Components.TextPoint
 {
     public class PText : IPointAction
     {

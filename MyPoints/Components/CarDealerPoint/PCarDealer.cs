@@ -1,35 +1,37 @@
 ﻿using Life.Network;
 using MyPoints.Interfaces;
+using MyPoints.Panels.ActionPanels;
 using MyPoints.Panels.PanelsData;
 using Newtonsoft.Json;
+using System.Collections.Generic;
 using System.IO;
 using static PointActionManager;
-using System.Collections.Generic;
-using MyPoints.Panels.ActionPanels;
 
-namespace MyPoints.Components
+namespace MyPoints.Components.CarDealerPoint
 {
-    public class PShop : IPointAction
+    public class PCarDealer : IPointAction
     {
         public PointActionKeys ActionKeys { get; set; }
         public string Slug { get; set; }
-        public List<ShopItem> shopItems { get; set; }
-        public PShop()
+        public List<CarDealerVehicle> carDealerVehicles { get; set; }
+
+        public PCarDealer()
         {
-            ActionKeys = PointActionKeys.Shop;
-            shopItems = new List<ShopItem>();
+            ActionKeys = PointActionKeys.CarDealer;
+            carDealerVehicles = new List<CarDealerVehicle>();
         }
 
         public void OnPlayerTrigger(Player player)
         {
-            ShopActionPanels.OpenShop(player, this);
+            CarDealerActionPanels.CarDealerVehiculeList(player, this);
         }
 
         public void CreateData(Player player)
         {
-            PShop pShop = new PShop();
-            ShopDataPanels.ShopCreationInstructions(player, pShop);
+            PCarDealer pCarDealer = new PCarDealer();
+            CarDealerDataPanels.CarDealerCreationInstructions(player, pCarDealer);
         }
+
         public void UpdateProps(string json)
         {
             JsonConvert.PopulateObject(json, this);
@@ -42,7 +44,7 @@ namespace MyPoints.Components
 
             do
             {
-                filePath = Path.Combine(Main.dataPath + "/" + PointActionKeys.Shop, $"shop_{Slug}_{number}.json");
+                filePath = Path.Combine(Main.dataPath + "/" + ActionKeys, $"{ActionKeys}_{Slug}_{number}.json");
                 number++;
             } while (File.Exists(filePath));
 
@@ -52,7 +54,8 @@ namespace MyPoints.Components
 
         public object Clone()
         {
-            return new PShop();
+            return new PCarDealer();
         }
+
     }
 }

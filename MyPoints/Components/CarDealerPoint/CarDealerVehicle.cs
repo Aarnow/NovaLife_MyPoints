@@ -3,7 +3,7 @@ using Life.VehicleSystem;
 using Newtonsoft.Json;
 using System;
 
-namespace MyPoints.Components
+namespace MyPoints.Components.CarDealerPoint
 {
     public class CarDealerVehicle
     {

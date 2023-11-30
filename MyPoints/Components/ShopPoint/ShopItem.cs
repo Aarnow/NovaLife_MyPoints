@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 using System;
 using System.Linq;
 
-namespace MyPoints.Components
+namespace MyPoints.Components.ShopPoint
 {
     public class ShopItem
     {
@@ -18,7 +18,7 @@ namespace MyPoints.Components
         [JsonIgnore]
         public int ItemIconId { get; set; }
 
-        public ShopItem (double price, int itemId, bool buyable, bool resellable, string data = null)
+        public ShopItem(double price, int itemId, bool buyable, bool resellable, string data = null)
         {
             Price = price;
             ItemId = itemId;

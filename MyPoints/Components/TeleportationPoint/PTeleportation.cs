@@ -7,7 +7,7 @@ using System.IO;
 using Newtonsoft.Json;
 using static PointActionManager;
 
-namespace MyPoints.Components
+namespace MyPoints.Components.TeleportationPoint
 {
     [Serializable]
     public class PTeleportation : IPointAction

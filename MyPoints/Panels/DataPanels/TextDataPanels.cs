@@ -1,7 +1,7 @@
 ﻿using Life;
 using Life.Network;
 using Life.UI;
-using MyPoints.Components;
+using MyPoints.Components.TextPoint;
 using MyPoints.Managers;
 
 namespace MyPoints.Panels.PanelsData
@@ -56,6 +56,5 @@ namespace MyPoints.Panels.PanelsData
 
             player.ShowPanelUI(panel);
         }
-
     }
 }

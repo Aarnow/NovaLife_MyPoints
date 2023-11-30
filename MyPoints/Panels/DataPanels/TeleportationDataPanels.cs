@@ -1,8 +1,8 @@
-﻿using MyPoints.Components;
-using Life.UI;
+﻿using Life.UI;
 using Life.Network;
 using MyPoints.Managers;
 using Life;
+using MyPoints.Components.TeleportationPoint;
 
 namespace MyPoints.Panels.PanelsData
 {

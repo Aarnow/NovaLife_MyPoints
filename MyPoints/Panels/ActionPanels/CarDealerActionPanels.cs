@@ -2,7 +2,7 @@
 using Life.DB;
 using Life.Network;
 using Life.UI;
-using MyPoints.Components;
+using MyPoints.Components.CarDealerPoint;
 using MyPoints.Managers;
 using System.Linq;
 

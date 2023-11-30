@@ -1,4 +1,8 @@
 ﻿using MyPoints.Components;
+using MyPoints.Components.CarDealerPoint;
+using MyPoints.Components.ShopPoint;
+using MyPoints.Components.TeleportationPoint;
+using MyPoints.Components.TextPoint;
 using MyPoints.Interfaces;
 using System.Collections.Generic;
 

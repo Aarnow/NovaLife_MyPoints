@@ -2,7 +2,7 @@
 using Life.InventorySystem;
 using Life.Network;
 using Life.UI;
-using MyPoints.Components;
+using MyPoints.Components.ShopPoint;
 using MyPoints.Managers;
 using System.Linq;
 
@@ -71,7 +71,6 @@ namespace MyPoints.Panels.ActionPanels
 
             player.ShowPanelUI(panel);
         }
-
         public static void Sell(Player player, PShop pShop, ShopItem shopItem)
         {
             int itemCount = 0;
