@@ -1,28 +1,24 @@
-﻿using MyPoints.Interfaces;
-using System;
+﻿using System;
 using Life.Network;
-using MyPoints.Panels.PanelsData;
-using UnityEngine;
-using System.IO;
 using Newtonsoft.Json;
-using static PointActionManager;
 using MyPoints.Common;
+using MyPoints.Panels.PanelsData;
+using static PointActionManager;
+using UnityEngine;
 
 namespace MyPoints.Components.TeleportationPoint
 {
-    [Serializable]
     public class PTeleportation : PointAction
     {
-        [JsonIgnore]
-        public override PointActionKeys ActionKeys { get; }
+        public override PointActionKeys ActionKeys { get; set; }
         public override string Slug { get; set; }
         public float X { get; set; }
         public float Y { get; set; }
         public float Z { get; set; }
 
         public PTeleportation(float x = 0.0f, float y = 0.0f, float z = 0.0f)
+            :base(PointActionKeys.Teleportation, "default_tp")
         {
-            ActionKeys = PointActionKeys.Teleportation;
             X = x;
             Y = y;
             Z = z;
@@ -49,6 +45,11 @@ namespace MyPoints.Components.TeleportationPoint
             X = position.x;
             Y = position.y;
             Z = position.z;
+        }
+
+        public override object Clone()
+        {
+            return new PTeleportation();
         }
     }
 }

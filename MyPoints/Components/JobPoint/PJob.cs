@@ -3,16 +3,15 @@ using MyPoints.Common;
 using Newtonsoft.Json;
 using static PointActionManager;
 
-namespace MyPoints.Components.TrashPoint
+namespace MyPoints.Components.JobPoint
 {
-    public class PTrash : PointAction
+    public class PJob : PointAction
     {
-        public override PointActionKeys ActionKeys { get; }
+        public override PointActionKeys ActionKeys { get; set; }
         public override string Slug { get; set; }
 
-        public PTrash()
+        public PJob():base(PointActionKeys.Job, "default_job")
         {
-            ActionKeys = PointActionKeys.Trash;
         }
 
         public override void OnPlayerTrigger(Player player)
@@ -26,6 +25,11 @@ namespace MyPoints.Components.TrashPoint
         public override void UpdateProps(string json)
         {
             JsonConvert.PopulateObject(json, this);
+        }
+
+        public override object Clone()
+        {
+            return new PJob();
         }
     }
 }

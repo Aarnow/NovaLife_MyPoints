@@ -1,22 +1,21 @@
 ﻿using Life.Network;
-using MyPoints.Panels.PanelsData;
 using Newtonsoft.Json;
-using System.IO;
-using static PointActionManager;
 using System.Collections.Generic;
+using MyPoints.Panels.PanelsData;
 using MyPoints.Panels.ActionPanels;
 using MyPoints.Common;
+using static PointActionManager;
 
 namespace MyPoints.Components.ShopPoint
 {
     public class PShop : PointAction
     {
-        public override PointActionKeys ActionKeys { get; }
+        public override PointActionKeys ActionKeys { get; set; }
         public override string Slug { get; set; }
         public List<ShopItem> ShopItems { get; set; }
         public PShop()
+            :base(PointActionKeys.Shop, "default_shop")
         {
-            ActionKeys = PointActionKeys.Shop;
             ShopItems = new List<ShopItem>();
         }
 
@@ -33,6 +32,11 @@ namespace MyPoints.Components.ShopPoint
         public override void UpdateProps(string json)
         {
             JsonConvert.PopulateObject(json, this);
+        }
+
+        public override object Clone()
+        {
+            return new PShop();
         }
     }
 }

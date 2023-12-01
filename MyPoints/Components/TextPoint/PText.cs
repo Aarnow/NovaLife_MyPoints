@@ -1,21 +1,22 @@
 ﻿using Life.Network;
+using Newtonsoft.Json;
 using MyPoints.Common;
 using MyPoints.Panels.ActionPanels;
 using MyPoints.Panels.PanelsData;
-using Newtonsoft.Json;
 using static PointActionManager;
 
 namespace MyPoints.Components.TextPoint
 {
     public class PText : PointAction
     {
-        public override PointActionKeys ActionKeys { get; }
+        public override PointActionKeys ActionKeys { get; set; }
         public override string Slug { get; set; }
         public string Content { get; set; }
 
-        public PText()
+        public PText(string content = "default_content")
+            :base(PointActionKeys.Text, "default_text")
         {
-            ActionKeys = PointActionKeys.Text;
+            Content = content;
         }
 
         public override void OnPlayerTrigger(Player player)
@@ -32,6 +33,11 @@ namespace MyPoints.Components.TextPoint
         public override void UpdateProps(string json)
         {
             JsonConvert.PopulateObject(json, this);
+        }
+
+        public override object Clone()
+        {
+            return new PText();
         }
     }
 }

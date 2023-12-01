@@ -6,7 +6,7 @@ using Life;
 using Life.DB;
 using Life.Network;
 using Life.UI;
-using MyPoints.Components;
+using MyPoints.Common;
 using MyPoints.DTO;
 using MyPoints.Interfaces;
 using MyPoints.Managers;

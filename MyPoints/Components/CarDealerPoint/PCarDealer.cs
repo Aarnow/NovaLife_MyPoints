@@ -1,21 +1,22 @@
 ﻿using Life.Network;
-using MyPoints.Common;
-using MyPoints.Panels.ActionPanels;
-using MyPoints.Panels.PanelsData;
 using Newtonsoft.Json;
 using System.Collections.Generic;
+using MyPoints.Panels.PanelsData;
+using MyPoints.Panels.ActionPanels;
+using MyPoints.Common;
 using static PointActionManager;
+using MyPoints.Components.TextPoint;
 
 namespace MyPoints.Components.CarDealerPoint
 {
     public class PCarDealer : PointAction
     {
-        public override PointActionKeys ActionKeys { get; }
+        public override PointActionKeys ActionKeys { get; set; }
         public override string Slug { get; set; }
         public List<CarDealerVehicle> CarDealerVehicles { get; set; }
         public PCarDealer()
+            :base(PointActionKeys.CarDealer, "default_carDealer")
         {
-            ActionKeys = PointActionKeys.CarDealer;
             CarDealerVehicles = new List<CarDealerVehicle>();
         }
 
@@ -33,6 +34,11 @@ namespace MyPoints.Components.CarDealerPoint
         public override void UpdateProps(string json)
         {
             JsonConvert.PopulateObject(json, this);
+        }
+
+        public override object Clone()
+        {
+            return new PCarDealer();
         }
     }
 }

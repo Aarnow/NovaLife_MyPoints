@@ -6,9 +6,9 @@ using Mirror;
 using Newtonsoft.Json;
 using System;
 using System.IO;
-using MyPoints.Components;
 using MyPoints.Managers;
 using MyPoints.Panels;
+using MyPoints.Common;
 
 namespace MyPoints
 {

@@ -10,7 +10,7 @@ using static PointActionManager;
 using Life.Network;
 using MyPoints.Managers;
 
-namespace MyPoints.Components
+namespace MyPoints.Common
 {
     [Serializable]
     public class Point
@@ -30,49 +30,49 @@ namespace MyPoints.Components
         public float[] PositionAxis
         {
             get => new float[] { Position.x, Position.y, Position.z };
-            set => Position = (value.Length == 3) ? new Vector3(value[0], value[1], value[2]) : Position;
+            set => Position = value.Length == 3 ? new Vector3(value[0], value[1], value[2]) : Position;
         }
 
         public Point(uint playerId, string slug, string name, string dataFilePath, PointActionKeys actionKey, bool isOpen, List<int> allowedBizs, float[] positionAxis)
         {
-            this.PlayerId = playerId;
-            this.Slug = slug;
-            this.Name = name;
-            this.DataFilePath = dataFilePath;
-            this.ActionKey = actionKey;
-            this.IsOpen = isOpen;
-            this.AllowedBizs = allowedBizs;
-            this.PositionAxis = positionAxis;
+            PlayerId = playerId;
+            Slug = slug;
+            Name = name;
+            DataFilePath = dataFilePath;
+            ActionKey = actionKey;
+            IsOpen = isOpen;
+            AllowedBizs = allowedBizs;
+            PositionAxis = positionAxis;
         }
 
         public NCheckpoint Build(Player player)
-        {  
+        {
             try
             {
                 string json = File.ReadAllText(DataFilePath);
+
                 IPointAction Action = GetActionByKey(ActionKey);
                 if (Action != null)
                 {
                     Action.UpdateProps(json);
-
                     NCheckpoint newCheckpoint = new NCheckpoint(player.setup.netId, Position, delegate
                     {
                         if (IsOpen)
                         {
-                            if(AllowedBizs.Count > 0 && AllowedBizs.Contains(player.character.BizId) || AllowedBizs.Count == 0)
-                            { 
-                                Action.OnPlayerTrigger(player);                   
+                            if (AllowedBizs.Count > 0 && AllowedBizs.Contains(player.character.BizId) || AllowedBizs.Count == 0)
+                            {
+                                Action.OnPlayerTrigger(player);
                             }
                             else UIPanelManager.Notification(player, "Accès refusé", "Votre société n'est pas autorisée à intéragir avec ce point.", NotificationManager.Type.Warning);
                         }
                         else UIPanelManager.Notification(player, "Accès refusé", "Ce point est actuellement hors service.", NotificationManager.Type.Warning);
-                        
+
                     });
 
                     return newCheckpoint;
-                } 
+                }
                 else throw new Exception("Erreur: Action est null");
-                
+
             }
             catch (Exception ex)
             {
@@ -82,14 +82,14 @@ namespace MyPoints.Components
         }
 
         public void Create(Player player)
-        {        
-                Nova.server.Players.ForEach(p =>
-                {
-                    NCheckpoint newCheckpoint = Build(p);
-                    if (newCheckpoint != null)  p.CreateCheckpoint(newCheckpoint);
-                    else Console.WriteLine("Erreur lors du build d'un point.");
-                });
-                Save();
+        {
+            Nova.server.Players.ForEach(p =>
+            {
+                NCheckpoint newCheckpoint = Build(p);
+                if (newCheckpoint != null) p.CreateCheckpoint(newCheckpoint);
+                else Console.WriteLine("Erreur lors du build d'un point.");
+            });
+            Save();
         }
 
         public void Delete(Player player)
