@@ -14,14 +14,14 @@ namespace MyPoints.Panels.ActionPanels
         {
             UIPanel panel = new UIPanel("MyPoints Menu", UIPanel.PanelType.TabPrice).SetTitle($"{pCarDealer.Slug}");
 
-            foreach ((CarDealerVehicle carDealerVehicle, int index) in pCarDealer.carDealerVehicles.Select((carDealerVehicle, index) => (carDealerVehicle, index)))
+            foreach ((CarDealerVehicle carDealerVehicle, int index) in pCarDealer.CarDealerVehicles.Select((carDealerVehicle, index) => (carDealerVehicle, index)))
             {
                 panel.AddTabLine($"{carDealerVehicle.Vehicle.vehicleName}", carDealerVehicle.Price.ToString("F2") + "€", carDealerVehicle.VehicleIconId, (ui) => { ui.selectedTab = index; });
             }
 
             panel.AddButton("Acheter", (ui) =>
             {
-                if (pCarDealer.carDealerVehicles[ui.selectedTab].Buyable) UIPanelManager.NextPanel(player, ui, () => ConfirmPurchase(player, pCarDealer, pCarDealer.carDealerVehicles[ui.selectedTab]));
+                if (pCarDealer.CarDealerVehicles[ui.selectedTab].Buyable) UIPanelManager.NextPanel(player, ui, () => ConfirmPurchase(player, pCarDealer, pCarDealer.CarDealerVehicles[ui.selectedTab]));
                 else UIPanelManager.Notification(player, "Indisponible", "Cette objet ne peut pas être acheté.", NotificationManager.Type.Warning);
             });
             panel.AddButton("Fermer", (ui) => UIPanelManager.Quit(ui, player));

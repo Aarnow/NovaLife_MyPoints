@@ -28,7 +28,7 @@ namespace MyPoints.Panels.PanelsData
         {
             UIPanel panel = new UIPanel("MyPoints Menu", UIPanel.PanelType.TabPrice).SetTitle($"Aperçu de votre boutique");
 
-            foreach ((CarDealerVehicle carDealerVehicle, int index) in pCarDealer.carDealerVehicles.Select((carDealerVehicle, index) => (carDealerVehicle, index)))
+            foreach ((CarDealerVehicle carDealerVehicle, int index) in pCarDealer.CarDealerVehicles.Select((carDealerVehicle, index) => (carDealerVehicle, index)))
             {
                 panel.AddTabLine($"{carDealerVehicle.Vehicle.vehicleName}", carDealerVehicle.Price.ToString("F2") + "€", carDealerVehicle.VehicleIconId, (ui) => { ui.selectedTab = index; });
             }
@@ -36,7 +36,7 @@ namespace MyPoints.Panels.PanelsData
             panel.AddButton("Ajouter", (ui) => UIPanelManager.NextPanel(player, ui, () => AddVehicle(player, pCarDealer)));
             panel.AddButton("Supprimer", (ui) => UIPanelManager.NextPanel(player, ui, () =>
             {
-                pCarDealer.carDealerVehicles.RemoveAt(ui.selectedTab);
+                pCarDealer.CarDealerVehicles.RemoveAt(ui.selectedTab);
                 SetVehicleList(player, pCarDealer);
             }));
             panel.AddButton("Valider", (ui) => UIPanelManager.NextPanel(player, ui, () => SetSlug(player, pCarDealer)));
@@ -72,7 +72,7 @@ namespace MyPoints.Panels.PanelsData
                                     {
                                         vehiclePrice = Math.Ceiling(vehiclePrice * 100) / 100;
                                         CarDealerVehicle carDealerVehicle = new CarDealerVehicle(vehiclePrice, vehicleId, buyable, resellable);
-                                        pCarDealer.carDealerVehicles.Add(carDealerVehicle);
+                                        pCarDealer.CarDealerVehicles.Add(carDealerVehicle);
                                         SetVehicleList(player, pCarDealer);
                                     });
                                 }

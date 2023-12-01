@@ -27,7 +27,7 @@ namespace MyPoints.Panels.PanelsData
 
             UIPanel panel = new UIPanel("MyPoints Menu", UIPanel.PanelType.TabPrice).SetTitle($"Aperçu de votre boutique");
 
-            foreach((ShopItem shopItem, int index) in pShop.shopItems.Select((shopItem, index)=>(shopItem, index)))
+            foreach((ShopItem shopItem, int index) in pShop.ShopItems.Select((shopItem, index)=>(shopItem, index)))
             {
                 panel.AddTabLine($"{shopItem.Item.itemName}",shopItem.Price.ToString("F2") + "€",shopItem.ItemIconId, (ui) =>{ui.selectedTab = index;});
             }
@@ -35,7 +35,7 @@ namespace MyPoints.Panels.PanelsData
             panel.AddButton("Ajouter", (ui) => UIPanelManager.NextPanel(player, ui, () => AddItem(player, pShop)));
             panel.AddButton("Supprimer", (ui) => UIPanelManager.NextPanel(player, ui, ()=>
             {
-                pShop.shopItems.RemoveAt(ui.selectedTab);
+                pShop.ShopItems.RemoveAt(ui.selectedTab);
                 SetItemList(player, pShop);
             }));
             panel.AddButton("Valider", (ui) => UIPanelManager.NextPanel(player, ui, () => SetSlug(player, pShop)));
@@ -69,7 +69,7 @@ namespace MyPoints.Panels.PanelsData
                                 {
                                     itemPrice = Math.Ceiling(itemPrice * 100) / 100;
                                     ShopItem shopItem = new ShopItem(itemPrice, itemId, buyable, resellable);
-                                    pShop.shopItems.Add(shopItem);
+                                    pShop.ShopItems.Add(shopItem);
                                     SetItemList(player, pShop);
                                 });
                             }

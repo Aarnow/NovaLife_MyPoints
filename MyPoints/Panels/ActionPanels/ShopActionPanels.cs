@@ -14,19 +14,19 @@ namespace MyPoints.Panels.ActionPanels
         {
             UIPanel panel = new UIPanel("MyPoints Menu", UIPanel.PanelType.TabPrice).SetTitle($"{pShop.Slug}");
 
-            foreach ((ShopItem shopItem, int index) in pShop.shopItems.Select((shopItem, index) => (shopItem, index)))
+            foreach ((ShopItem shopItem, int index) in pShop.ShopItems.Select((shopItem, index) => (shopItem, index)))
             {
                 panel.AddTabLine($"{shopItem.Item.itemName}", shopItem.Price.ToString("F2") + "€", shopItem.ItemIconId, (ui) => { ui.selectedTab = 0; });
             }
 
             panel.AddButton("Acheter", (ui) =>
             {
-                if (pShop.shopItems[ui.selectedTab].Buyable) Buy(player, pShop, pShop.shopItems[ui.selectedTab]);
+                if (pShop.ShopItems[ui.selectedTab].Buyable) Buy(player, pShop, pShop.ShopItems[ui.selectedTab]);
                 else UIPanelManager.Notification(player, "Indisponible", "Cette objet ne peut pas être acheté.", NotificationManager.Type.Warning);
             });
             panel.AddButton("Vendre", (ui) =>
             {
-                if (pShop.shopItems[ui.selectedTab].Resellable) Sell(player, pShop, pShop.shopItems[ui.selectedTab]);
+                if (pShop.ShopItems[ui.selectedTab].Resellable) Sell(player, pShop, pShop.ShopItems[ui.selectedTab]);
                 else UIPanelManager.Notification(player, "Indisponible", "Cette objet ne peut pas être vendu.", NotificationManager.Type.Warning);
             });
             panel.AddButton("Fermer", (ui) => UIPanelManager.Quit(ui, player));

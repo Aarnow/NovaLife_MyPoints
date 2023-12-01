@@ -6,7 +6,7 @@ namespace MyPoints.Interfaces
 {
     public interface IPointAction : ICloneable
     {
-        PointActionKeys ActionKeys { get; set; }
+        PointActionKeys ActionKeys { get; }
         string Slug { get; set; }
         void OnPlayerTrigger(Player player);
         void CreateData(Player player);

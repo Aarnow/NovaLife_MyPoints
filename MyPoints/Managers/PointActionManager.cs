@@ -1,8 +1,8 @@
-﻿using MyPoints.Components;
-using MyPoints.Components.CarDealerPoint;
+﻿using MyPoints.Components.CarDealerPoint;
 using MyPoints.Components.ShopPoint;
 using MyPoints.Components.TeleportationPoint;
 using MyPoints.Components.TextPoint;
+using MyPoints.Components.TrashPoint;
 using MyPoints.Interfaces;
 using System.Collections.Generic;
 
@@ -14,6 +14,7 @@ public abstract class PointActionManager
         Text,
         Shop,
         CarDealer,
+        Trash,
     }
 
     public static Dictionary<PointActionKeys, IPointAction> Actions = new Dictionary<PointActionKeys, IPointAction>
@@ -22,6 +23,7 @@ public abstract class PointActionManager
         { PointActionKeys.Text, new PText()},
         { PointActionKeys.Shop, new PShop()},
         { PointActionKeys.CarDealer, new PCarDealer()},
+        { PointActionKeys.Trash, new PTrash()},
     };
 
     public static IPointAction GetActionByKey(PointActionKeys key)
