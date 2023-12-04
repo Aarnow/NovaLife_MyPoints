@@ -13,6 +13,10 @@
 # Rider
 .idea/
 
+# Depedencies
+bin/
+obj/
+
 # NuGet
 *.nuget.props
 *.nuget.targets
