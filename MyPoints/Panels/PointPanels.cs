@@ -9,8 +9,8 @@ using Life.UI;
 using MyPoints.Common;
 using MyPoints.DTO;
 using MyPoints.Interfaces;
-using MyPoints.Managers;
 using Newtonsoft.Json;
+using UIPanelManager;
 using UnityEngine;
 using static PointActionManager;
 
@@ -28,15 +28,15 @@ namespace MyPoints.Panels
 
             panel.AddButton("Sélectionner", (ui) =>
             {
-                UIPanelManager.NextPanel(player, ui, () =>
+                PanelManager.NextPanel(player, ui, () =>
                 {
                     if (Enum.TryParse(ui.lines[ui.selectedTab].name, out PointActionKeys actionKey)) pointDto.ActionKey = actionKey;                  
-                    else UIPanelManager.Notification(player, "Erreur", "Nous n'avons pas pu valider cette action", NotificationManager.Type.Error);
+                    else PanelManager.Notification(player, "Erreur", "Nous n'avons pas pu valider cette action", NotificationManager.Type.Error);
                     SetData(player, pointDto);
                 });
             });
-            panel.AddButton("Retour", (ui) => UIPanelManager.NextPanel(player, ui, ()=> MainPanel.OpenMyPointsMenu(player)));
-            panel.AddButton("Fermer", (ui) => UIPanelManager.Quit(ui, player));
+            panel.AddButton("Retour", (ui) => PanelManager.NextPanel(player, ui, ()=> MainPanel.OpenMyPointsMenu(player)));
+            panel.AddButton("Fermer", (ui) => PanelManager.Quit(ui, player));
 
             player.ShowPanelUI(panel);
         }
@@ -56,7 +56,7 @@ namespace MyPoints.Panels
 
             panel.AddButton("Sélectionner", (ui) =>
             {
-                UIPanelManager.NextPanel(player, ui, () =>
+                PanelManager.NextPanel(player, ui, () =>
                 {
                     pointDto.DataFilePath = path + "/" + ui.lines[ui.selectedTab].name + ".json";
                     SetAllowedBizs(player, pointDto);
@@ -64,12 +64,12 @@ namespace MyPoints.Panels
             });
             panel.AddButton("Retour", (ui) =>
             {
-                UIPanelManager.NextPanel(player, ui, () =>
+                PanelManager.NextPanel(player, ui, () =>
                 {
                     SetAction(player);
                 });
             });
-            panel.AddButton("Fermer", (ui) => UIPanelManager.Quit(ui, player));
+            panel.AddButton("Fermer", (ui) => PanelManager.Quit(ui, player));
 
             player.ShowPanelUI(panel);
         }
@@ -79,20 +79,20 @@ namespace MyPoints.Panels
             UIPanel panel = new UIPanel("MyPoints Menu", UIPanel.PanelType.Tab).SetTitle($"Ajouter les sociétés autorisées");
 
             foreach ((Bizs biz, int index) in Nova.biz.bizs.Select((value, index) => (value, index)))
-                panel.AddTabLine(pointDto.AllowedBizs.Contains(biz.Id) ? $"<color={UIPanelManager.Colors[NotificationManager.Type.Success]}>{biz.BizName}</color>" : $"{biz.BizName}", (ui) => ui.selectedTab = index);
+                panel.AddTabLine(pointDto.AllowedBizs.Contains(biz.Id) ? $"<color={PanelManager.Colors[NotificationManager.Type.Success]}>{biz.BizName}</color>" : $"{biz.BizName}", (ui) => ui.selectedTab = index);
             
             panel.AddButton("Ajouter/Retirer", (ui) =>
             {
-                UIPanelManager.NextPanel(player, ui, () =>
+                PanelManager.NextPanel(player, ui, () =>
                 {
                     if (pointDto.AllowedBizs.Contains(Nova.biz.bizs[ui.selectedTab].Id)) pointDto.AllowedBizs.Remove(Nova.biz.bizs[ui.selectedTab].Id);               
                     else pointDto.AllowedBizs.Add(Nova.biz.bizs[ui.selectedTab].Id);
                     SetAllowedBizs(player, pointDto);
                 });
             });
-            panel.AddButton("Confirmer", (ui) => UIPanelManager.NextPanel(player, ui, () => SetIsOpen(player, pointDto)));
-            panel.AddButton("Retour", (ui) => UIPanelManager.NextPanel(player, ui, () => SetData(player, pointDto)));
-            panel.AddButton("Fermer", (ui) => UIPanelManager.Quit(ui, player));
+            panel.AddButton("Confirmer", (ui) => PanelManager.NextPanel(player, ui, () => SetIsOpen(player, pointDto)));
+            panel.AddButton("Retour", (ui) => PanelManager.NextPanel(player, ui, () => SetData(player, pointDto)));
+            panel.AddButton("Fermer", (ui) => PanelManager.Quit(ui, player));
 
             player.ShowPanelUI(panel);
         }
@@ -106,7 +106,7 @@ namespace MyPoints.Panels
 
             panel.AddButton("Ouvert", (ui) =>
             {
-                UIPanelManager.NextPanel(player, ui, () =>
+                PanelManager.NextPanel(player, ui, () =>
                 {
                     pointDto.IsOpen = true;
                     SetName(player, pointDto);
@@ -114,14 +114,14 @@ namespace MyPoints.Panels
             });
             panel.AddButton("Fermer", (ui) =>
             {
-                UIPanelManager.NextPanel(player, ui, () =>
+                PanelManager.NextPanel(player, ui, () =>
                 {
                     pointDto.IsOpen = false;
                     SetName(player, pointDto);
                 });
             });
-            panel.AddButton("Retour", (ui) => UIPanelManager.NextPanel(player, ui, () => SetAllowedBizs(player, pointDto)));
-            panel.AddButton("Fermer", (ui) => UIPanelManager.Quit(ui, player));
+            panel.AddButton("Retour", (ui) => PanelManager.NextPanel(player, ui, () => SetAllowedBizs(player, pointDto)));
+            panel.AddButton("Fermer", (ui) => PanelManager.Quit(ui, player));
 
             player.ShowPanelUI(panel);
         }
@@ -134,7 +134,7 @@ namespace MyPoints.Panels
 
             panel.AddButton("Enregistrer", (ui) =>
             {
-                UIPanelManager.NextPanel(player, ui, () =>
+                PanelManager.NextPanel(player, ui, () =>
                 {
                     if (ui.inputText.Length != 0)
                     {
@@ -142,12 +142,12 @@ namespace MyPoints.Panels
                         Vector3 position = player.setup.transform.position;
                         Point newPoint = new Point(player.netId, pointDto.ActionKey+"_"+pointDto.Name, pointDto.Name, pointDto.DataFilePath, pointDto.ActionKey, pointDto.IsOpen, pointDto.AllowedBizs, new float[] { position.x, position.y, position.z });
                         newPoint.Create(player);
-                        UIPanelManager.Notification(player, "Succès", "Votre point est prêt.", NotificationManager.Type.Success);
-                    } else UIPanelManager.Notification(player, "Erreur", "Veuillez nommer votre point.", NotificationManager.Type.Error);
+                        PanelManager.Notification(player, "Succès", "Votre point est prêt.", NotificationManager.Type.Success);
+                    } else PanelManager.Notification(player, "Erreur", "Veuillez nommer votre point.", NotificationManager.Type.Error);
                 });
             });
-            panel.AddButton("Retour", (ui) => UIPanelManager.NextPanel(player, ui, () => SetIsOpen(player, pointDto)));
-            panel.AddButton("Fermer", (ui) => UIPanelManager.Quit(ui, player));
+            panel.AddButton("Retour", (ui) => PanelManager.NextPanel(player, ui, () => SetIsOpen(player, pointDto)));
+            panel.AddButton("Fermer", (ui) => PanelManager.Quit(ui, player));
 
             player.ShowPanelUI(panel);
         }
@@ -176,10 +176,10 @@ namespace MyPoints.Panels
                 string json = File.ReadAllText(jsonFiles[ui.selectedTab]);
                 Point point = JsonConvert.DeserializeObject<Point>(json);
                 if(point != null) point.Delete(player);
-                UIPanelManager.NextPanel(player, ui, () => PointList(player));
+                PanelManager.NextPanel(player, ui, () => PointList(player));
             });
-            panel.AddButton("Retour", (ui) => UIPanelManager.NextPanel(player, ui, () => MainPanel.OpenMyPointsMenu(player)));
-            panel.AddButton("Fermer", (ui) => UIPanelManager.Quit(ui, player));
+            panel.AddButton("Retour", (ui) => PanelManager.NextPanel(player, ui, () => MainPanel.OpenMyPointsMenu(player)));
+            panel.AddButton("Fermer", (ui) => PanelManager.Quit(ui, player));
 
             player.ShowPanelUI(panel);
         }

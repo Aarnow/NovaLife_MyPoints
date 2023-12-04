@@ -3,8 +3,8 @@ using Life.DB;
 using Life.Network;
 using Life.UI;
 using MyPoints.Components.CarDealerPoint;
-using MyPoints.Managers;
 using System.Linq;
+using UIPanelManager;
 
 namespace MyPoints.Panels.ActionPanels
 {
@@ -21,10 +21,10 @@ namespace MyPoints.Panels.ActionPanels
 
             panel.AddButton("Acheter", (ui) =>
             {
-                if (pCarDealer.CarDealerVehicles[ui.selectedTab].Buyable) UIPanelManager.NextPanel(player, ui, () => ConfirmPurchase(player, pCarDealer, pCarDealer.CarDealerVehicles[ui.selectedTab]));
-                else UIPanelManager.Notification(player, "Indisponible", "Cette objet ne peut pas être acheté.", NotificationManager.Type.Warning);
+                if (pCarDealer.CarDealerVehicles[ui.selectedTab].Buyable) PanelManager.NextPanel(player, ui, () => ConfirmPurchase(player, pCarDealer, pCarDealer.CarDealerVehicles[ui.selectedTab]));
+                else PanelManager.Notification(player, "Indisponible", "Cette objet ne peut pas être acheté.", NotificationManager.Type.Warning);
             });
-            panel.AddButton("Fermer", (ui) => UIPanelManager.Quit(ui, player));
+            panel.AddButton("Fermer", (ui) => PanelManager.Quit(ui, player));
 
             player.ShowPanelUI(panel);
         }
@@ -35,29 +35,29 @@ namespace MyPoints.Panels.ActionPanels
 
             panel.text = $"Confirmez-vous l'achat du véhicule modèle: \"{carDealerVehicle.Vehicle.vehicleName}\" au prix de {carDealerVehicle.Price}€ ?";
 
-            panel.AddButton("Confirmer", (ui) => UIPanelManager.NextPanel(player, ui, () =>
+            panel.AddButton("Confirmer", (ui) => PanelManager.NextPanel(player, ui, () =>
             {
                 if (player.character.Money >= carDealerVehicle.Price)
                 {
-                    UIPanelManager.NextPanel(player, ui, () =>
+                    PanelManager.NextPanel(player, ui, () =>
                     {
                         LifeDB.CreateVehicle(carDealerVehicle.ModelId, $"{{\"owner\":{{\"groupId\":0,\"characterId\":{player.character.Id}}},\"coOwners\":[]}}");
-                        UIPanelManager.Notification(player, "Succès", $"Félicitation, vous venez d'acquérir le véhicule modèle: \"{carDealerVehicle.Vehicle.vehicleName}\" pour {carDealerVehicle.Price}€.", NotificationManager.Type.Success);
+                        PanelManager.Notification(player, "Succès", $"Félicitation, vous venez d'acquérir le véhicule modèle: \"{carDealerVehicle.Vehicle.vehicleName}\" pour {carDealerVehicle.Price}€.", NotificationManager.Type.Success);
                         player.AddMoney(-carDealerVehicle.Price, "transaction");
                         PurchaseCompleted(player, pCarDealer, carDealerVehicle);
                     });
                 }
                 else
                 {
-                    UIPanelManager.NextPanel(player, ui, () =>
+                    PanelManager.NextPanel(player, ui, () =>
                     {
-                        UIPanelManager.Notification(player, "Erreur", "Vous n'avez pas les moyens pour acheter ce véhicule.", NotificationManager.Type.Error);
+                        PanelManager.Notification(player, "Erreur", "Vous n'avez pas les moyens pour acheter ce véhicule.", NotificationManager.Type.Error);
                         pCarDealer.OnPlayerTrigger(player);
                     });
                 };
             }));
-            panel.AddButton("Annuler", (ui) => UIPanelManager.NextPanel(player, ui, () => pCarDealer.OnPlayerTrigger(player)));
-            panel.AddButton("Fermer", (ui) => UIPanelManager.Quit(ui, player));
+            panel.AddButton("Annuler", (ui) => PanelManager.NextPanel(player, ui, () => pCarDealer.OnPlayerTrigger(player)));
+            panel.AddButton("Fermer", (ui) => PanelManager.Quit(ui, player));
 
             player.ShowPanelUI(panel);
         }
@@ -68,8 +68,8 @@ namespace MyPoints.Panels.ActionPanels
 
             panel.text = $"Votre véhicule modèle: \"{carDealerVehicle.Vehicle.name}\" est disponible dans votre garage virtuel.\nRendez-vous chez votre concessionnaire !";
 
-            panel.AddButton("Boutique", (ui) => UIPanelManager.NextPanel(player, ui, () => pCarDealer.OnPlayerTrigger(player)));
-            panel.AddButton("Fermer", (ui) => UIPanelManager.Quit(ui, player));
+            panel.AddButton("Boutique", (ui) => PanelManager.NextPanel(player, ui, () => pCarDealer.OnPlayerTrigger(player)));
+            panel.AddButton("Fermer", (ui) => PanelManager.Quit(ui, player));
 
             player.ShowPanelUI(panel);
         }

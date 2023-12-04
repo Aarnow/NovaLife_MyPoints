@@ -19,6 +19,12 @@
     <Reference Include="Mirror">
       <HintPath>..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Nova-Life\Nova-Life_Data\Managed\Mirror.dll</HintPath>
     </Reference>
+    <Reference Include="MyCloths">
+      <HintPath>..\..\MyCloths\bin\Debug\net4.7.2\MyCloths.dll</HintPath>
+    </Reference>
+    <Reference Include="UIPanelManager">
+      <HintPath>..\..\UIPanelManager\bin\Debug\net4.7.2\UIPanelManager.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine.CoreModule">
       <HintPath>..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Nova-Life\Nova-Life_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
     </Reference>

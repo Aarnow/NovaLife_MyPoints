@@ -2,10 +2,10 @@
 using Life.Network;
 using Life.UI;
 using MyPoints.Interfaces;
-using MyPoints.Managers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using UIPanelManager;
 using static PointActionManager;
 
 namespace MyPoints.Panels
@@ -21,18 +21,18 @@ namespace MyPoints.Panels
 
             panel.AddButton("Sélectionner", (ui) =>
             {
-                UIPanelManager.NextPanel(player, ui, () =>
+                PanelManager.NextPanel(player, ui, () =>
                 {
                     if (Enum.IsDefined(typeof(PointActionKeys), ui.lines[ui.selectedTab].name))
                     {
                         PointActionKeys actionKey = (PointActionKeys)Enum.Parse(typeof(PointActionKeys), ui.lines[ui.selectedTab].name);
                         Actions[actionKey].CreateData(player);
                     }
-                    else UIPanelManager.Notification(player, "Erreur", "Constructeur introuvable pour ce type de données", NotificationManager.Type.Error);
+                    else PanelManager.Notification(player, "Erreur", "Constructeur introuvable pour ce type de données", NotificationManager.Type.Error);
                 });
             });
-            panel.AddButton("Retour", (ui) => UIPanelManager.NextPanel(player, ui, () => MainPanel.OpenMyPointsMenu(player)));
-            panel.AddButton("Fermer", (ui) => UIPanelManager.Quit(ui, player));
+            panel.AddButton("Retour", (ui) => PanelManager.NextPanel(player, ui, () => MainPanel.OpenMyPointsMenu(player)));
+            panel.AddButton("Fermer", (ui) => PanelManager.Quit(ui, player));
 
             player.ShowPanelUI(panel);
         }

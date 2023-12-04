@@ -1,11 +1,9 @@
-﻿using I2.Loc.SimpleJSON;
-using MyPoints.Components.CarDealerPoint;
+﻿using MyPoints.Components.CarDealerPoint;
 using MyPoints.Components.ShopPoint;
 using MyPoints.Components.TeleportationPoint;
 using MyPoints.Components.TextPoint;
-using MyPoints.Components.JobPoint;
+using MyPoints.Components.OutfitPoint;
 using MyPoints.Interfaces;
-using System;
 using System.Collections.Generic;
 
 public abstract class PointActionManager
@@ -16,7 +14,7 @@ public abstract class PointActionManager
         Text,
         Shop,
         CarDealer,
-        Job,
+        Outfit,
     }
 
     public static Dictionary<PointActionKeys, IPointAction> Actions = new Dictionary<PointActionKeys, IPointAction>
@@ -25,7 +23,7 @@ public abstract class PointActionManager
         { PointActionKeys.Text, new PText()},
         { PointActionKeys.Shop, new PShop()},
         { PointActionKeys.CarDealer, new PCarDealer()},
-        { PointActionKeys.Job, new PJob()},
+        { PointActionKeys.Outfit, new POutfit()},
     };
 
     public static IPointAction GetActionByKey(PointActionKeys key)

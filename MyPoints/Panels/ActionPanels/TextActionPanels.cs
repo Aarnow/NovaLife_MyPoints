@@ -1,7 +1,7 @@
 ﻿using Life.Network;
 using Life.UI;
 using MyPoints.Components.TextPoint;
-using MyPoints.Managers;
+using UIPanelManager;
 
 namespace MyPoints.Panels.ActionPanels
 {
@@ -13,7 +13,7 @@ namespace MyPoints.Panels.ActionPanels
 
             panel.text = $"{pText.Content}";
 
-            panel.AddButton("Fermer", (ui) => UIPanelManager.Quit(ui, player));
+            panel.AddButton("Fermer", (ui) => PanelManager.Quit(ui, player));
 
             player.ShowPanelUI(panel);
         }

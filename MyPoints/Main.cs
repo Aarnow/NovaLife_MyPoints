@@ -6,9 +6,9 @@ using Mirror;
 using Newtonsoft.Json;
 using System;
 using System.IO;
-using MyPoints.Managers;
 using MyPoints.Panels;
 using MyPoints.Common;
+using UIPanelManager;
 
 namespace MyPoints
 {
@@ -30,10 +30,9 @@ namespace MyPoints
             new SChatCommand("/mypoints", new string[] {"/mp", "/myp"}, "Permet d'ouvrir le panel du plugin MyPoints", "/mypoints", (player, arg) =>
                 {
                     if (player.IsAdmin) MainPanel.OpenMyPointsMenu(player);     
-                    else UIPanelManager.Notification(player, "Avertissement", "Vous n'avez pas l'autorisation d'accéder à cette commande.", NotificationManager.Type.Error);
-                    
+                    else PanelManager.Notification(player, "Avertissement", "Vous n'avez pas l'autorisation d'accéder à cette commande.", NotificationManager.Type.Error);            
                 }).Register();
-            
+
             Console.WriteLine($"Plugin \"MyPoints\" initialisé avec succès.");
         }
 

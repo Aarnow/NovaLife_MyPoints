@@ -3,8 +3,8 @@ using Life.InventorySystem;
 using Life.Network;
 using Life.UI;
 using MyPoints.Components.ShopPoint;
-using MyPoints.Managers;
 using System.Linq;
+using UIPanelManager;
 
 namespace MyPoints.Panels.ActionPanels
 {
@@ -22,14 +22,14 @@ namespace MyPoints.Panels.ActionPanels
             panel.AddButton("Acheter", (ui) =>
             {
                 if (pShop.ShopItems[ui.selectedTab].Buyable) Buy(player, pShop, pShop.ShopItems[ui.selectedTab]);
-                else UIPanelManager.Notification(player, "Indisponible", "Cette objet ne peut pas être acheté.", NotificationManager.Type.Warning);
+                else PanelManager.Notification(player, "Indisponible", "Cette objet ne peut pas être acheté.", NotificationManager.Type.Warning);
             });
             panel.AddButton("Vendre", (ui) =>
             {
                 if (pShop.ShopItems[ui.selectedTab].Resellable) Sell(player, pShop, pShop.ShopItems[ui.selectedTab]);
-                else UIPanelManager.Notification(player, "Indisponible", "Cette objet ne peut pas être vendu.", NotificationManager.Type.Warning);
+                else PanelManager.Notification(player, "Indisponible", "Cette objet ne peut pas être vendu.", NotificationManager.Type.Warning);
             });
-            panel.AddButton("Fermer", (ui) => UIPanelManager.Quit(ui, player));
+            panel.AddButton("Fermer", (ui) => PanelManager.Quit(ui, player));
 
             player.ShowPanelUI(panel);
         }
@@ -49,25 +49,25 @@ namespace MyPoints.Panels.ActionPanels
                         {
                             if (!player.setup.inventory.AddItem(shopItem.ItemId, amount, shopItem.Data))
                             {
-                                UIPanelManager.Notification(player, "Erreur", "Vous n'avez pas suffisament de place dans votre inventaire.", NotificationManager.Type.Error);
+                                PanelManager.Notification(player, "Erreur", "Vous n'avez pas suffisament de place dans votre inventaire.", NotificationManager.Type.Error);
                             }
                             else
                             {
-                                UIPanelManager.NextPanel(player, ui, () =>
+                                PanelManager.NextPanel(player, ui, () =>
                                 {
-                                    UIPanelManager.Notification(player, "Achat", $"Vous venez d'acheter:\n{amount} {shopItem.Item.itemName} pour {amount * shopItem.Price}€", NotificationManager.Type.Success);
+                                    PanelManager.Notification(player, "Achat", $"Vous venez d'acheter:\n{amount} {shopItem.Item.itemName} pour {amount * shopItem.Price}€", NotificationManager.Type.Success);
                                     player.AddMoney(-shopItem.Price * amount, "transaction");
                                     pShop.OnPlayerTrigger(player);
                                 });
                             }
                         }
-                        else UIPanelManager.Notification(player, "Erreur", "Vous n'avez pas les moyens pour acheter cette quantité.", NotificationManager.Type.Error);
+                        else PanelManager.Notification(player, "Erreur", "Vous n'avez pas les moyens pour acheter cette quantité.", NotificationManager.Type.Error);
                     }
-                    else UIPanelManager.Notification(player, "Erreur", "La quantité minimale doit être d'au moins 1.", NotificationManager.Type.Error);
+                    else PanelManager.Notification(player, "Erreur", "La quantité minimale doit être d'au moins 1.", NotificationManager.Type.Error);
                 }
-                else UIPanelManager.Notification(player, "Erreur", "Veuillez n'utiliser que des chiffres pour indiquer la quantité.", NotificationManager.Type.Error);
+                else PanelManager.Notification(player, "Erreur", "Veuillez n'utiliser que des chiffres pour indiquer la quantité.", NotificationManager.Type.Error);
             });
-            panel.AddButton("Retour", (ui) => UIPanelManager.NextPanel(player, ui, () => pShop.OnPlayerTrigger(player)));
+            panel.AddButton("Retour", (ui) => PanelManager.NextPanel(player, ui, () => pShop.OnPlayerTrigger(player)));
 
             player.ShowPanelUI(panel);
         }
@@ -100,21 +100,21 @@ namespace MyPoints.Panels.ActionPanels
                                 }
                                 if (itemCount == 0 || amount == itemSelling) break;
                             }
-                            UIPanelManager.NextPanel(player, ui, () =>
+                            PanelManager.NextPanel(player, ui, () =>
                             {
                                 player.AddMoney(shopItem.Price * itemSelling, "transaction");
-                                UIPanelManager.Notification(player, "Vente", $"Vous avez vendu:\n{itemSelling} {shopItem.Item.itemName} pour {itemSelling * shopItem.Price}€", NotificationManager.Type.Success);
+                                PanelManager.Notification(player, "Vente", $"Vous avez vendu:\n{itemSelling} {shopItem.Item.itemName} pour {itemSelling * shopItem.Price}€", NotificationManager.Type.Success);
                                 pShop.OnPlayerTrigger(player);
                             });
 
                         }
-                        else UIPanelManager.Notification(player, "Erreur", "Vous ne possédez pas cette quantité dans votre inventaire.", NotificationManager.Type.Error);
+                        else PanelManager.Notification(player, "Erreur", "Vous ne possédez pas cette quantité dans votre inventaire.", NotificationManager.Type.Error);
                     }
-                    else UIPanelManager.Notification(player, "Erreur", "La quantité minimale doit être d'au moins 1.", NotificationManager.Type.Error);
+                    else PanelManager.Notification(player, "Erreur", "La quantité minimale doit être d'au moins 1.", NotificationManager.Type.Error);
                 }
-                else UIPanelManager.Notification(player, "Erreur", "Veuillez n'utiliser que des chiffres pour indiquer la quantité.", NotificationManager.Type.Error);
+                else PanelManager.Notification(player, "Erreur", "Veuillez n'utiliser que des chiffres pour indiquer la quantité.", NotificationManager.Type.Error);
             });
-            panel.AddButton("Retour", (ui) => UIPanelManager.NextPanel(player, ui, () => pShop.OnPlayerTrigger(player)));
+            panel.AddButton("Retour", (ui) => PanelManager.NextPanel(player, ui, () => pShop.OnPlayerTrigger(player)));
 
             player.ShowPanelUI(panel);
         }

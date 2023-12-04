@@ -1,11 +1,10 @@
 ﻿using Life.Network;
 using Newtonsoft.Json;
 using System.Collections.Generic;
-using MyPoints.Panels.PanelsData;
 using MyPoints.Panels.ActionPanels;
 using MyPoints.Common;
 using static PointActionManager;
-using MyPoints.Components.TextPoint;
+using MyPoints.Panels.DPanels;
 
 namespace MyPoints.Components.CarDealerPoint
 {

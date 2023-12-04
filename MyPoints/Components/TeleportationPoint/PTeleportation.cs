@@ -2,7 +2,7 @@
 using Life.Network;
 using Newtonsoft.Json;
 using MyPoints.Common;
-using MyPoints.Panels.PanelsData;
+using MyPoints.Panels.DPanels;
 using static PointActionManager;
 using UnityEngine;
 

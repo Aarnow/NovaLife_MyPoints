@@ -1,7 +1,7 @@
 ﻿using Life;
 using Life.UI;
 using Life.Network;
-using MyPoints.Managers;
+using UIPanelManager;
 
 namespace MyPoints.Panels
 {
@@ -17,12 +17,12 @@ namespace MyPoints.Panels
 
             panel.AddButton("Sélection", (ui) =>
             {
-                if (ui.selectedTab == 0) UIPanelManager.NextPanel(player, ui, () => PointPanels.SetAction(player));
-                else if (ui.selectedTab == 1) UIPanelManager.NextPanel(player, ui, () => PointPanels.PointList(player));
-                else if (ui.selectedTab == 2) UIPanelManager.NextPanel(player, ui, () => DataPanels.Action(player));
-                else UIPanelManager.Notification(player, "Erreur", "Vous devez sélectionner un choix", NotificationManager.Type.Error);
+                if (ui.selectedTab == 0) PanelManager.NextPanel(player, ui, () => PointPanels.SetAction(player));
+                else if (ui.selectedTab == 1) PanelManager.NextPanel(player, ui, () => PointPanels.PointList(player));
+                else if (ui.selectedTab == 2) PanelManager.NextPanel(player, ui, () => DataPanels.Action(player));
+                else PanelManager.Notification(player, "Erreur", "Vous devez sélectionner un choix", NotificationManager.Type.Error);
             });
-            panel.AddButton("Fermer", (ui) => UIPanelManager.Quit(ui, player));
+            panel.AddButton("Fermer", (ui) => PanelManager.Quit(ui, player));
 
             player.ShowPanelUI(panel);
         }

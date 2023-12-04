@@ -8,7 +8,7 @@ using System.IO;
 using MyPoints.Interfaces;
 using static PointActionManager;
 using Life.Network;
-using MyPoints.Managers;
+using UIPanelManager;
 
 namespace MyPoints.Common
 {
@@ -63,9 +63,9 @@ namespace MyPoints.Common
                             {
                                 Action.OnPlayerTrigger(player);
                             }
-                            else UIPanelManager.Notification(player, "Accès refusé", "Votre société n'est pas autorisée à intéragir avec ce point.", NotificationManager.Type.Warning);
+                            else PanelManager.Notification(player, "Accès refusé", "Votre société n'est pas autorisée à intéragir avec ce point.", NotificationManager.Type.Warning);
                         }
-                        else UIPanelManager.Notification(player, "Accès refusé", "Ce point est actuellement hors service.", NotificationManager.Type.Warning);
+                        else PanelManager.Notification(player, "Accès refusé", "Ce point est actuellement hors service.", NotificationManager.Type.Warning);
 
                     });
 
@@ -95,14 +95,13 @@ namespace MyPoints.Common
         public void Delete(Player player)
         {
             string path = Main.pointPath + "/Point_" + Slug + ".json";
-            Console.WriteLine(path);
             if (File.Exists(path)) File.Delete(path);
 
             foreach (NCheckpoint checkpoint in Nova.server.checkpoints)
                 if (checkpoint.position == Position)
                     foreach (Player p in Nova.server.GetAllInGamePlayers())
                         p.DestroyCheckpoint(checkpoint);
-            UIPanelManager.Notification(player, "Succès", "Le point à bien été supprimé.", NotificationManager.Type.Success);
+            PanelManager.Notification(player, "Succès", "Le point à bien été supprimé.", NotificationManager.Type.Success);
         }
 
         private void Save()
@@ -112,7 +111,7 @@ namespace MyPoints.Common
 
             do
             {
-                Slug += $"_{number}";
+                Slug = $"{Name}_{number}";
                 filePath = Path.Combine(Main.pointPath, $"Point_{Slug}.json");
                 number++;
             } while (File.Exists(filePath));

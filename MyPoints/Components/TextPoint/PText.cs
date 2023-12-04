@@ -2,7 +2,7 @@
 using Newtonsoft.Json;
 using MyPoints.Common;
 using MyPoints.Panels.ActionPanels;
-using MyPoints.Panels.PanelsData;
+using MyPoints.Panels.DPanels;
 using static PointActionManager;
 
 namespace MyPoints.Components.TextPoint

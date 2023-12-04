@@ -1,12 +1,12 @@
 ﻿using Life.Network;
 using Newtonsoft.Json;
 using System.Collections.Generic;
-using MyPoints.Panels.PanelsData;
+using MyPoints.Panels.DPanels;
 using MyPoints.Panels.ActionPanels;
 using MyPoints.Common;
 using static PointActionManager;
 
-namespace MyPoints.Components.ShopPoint
+namespace MyPoints.Components.ShopPoint 
 {
     public class PShop : PointAction
     {
