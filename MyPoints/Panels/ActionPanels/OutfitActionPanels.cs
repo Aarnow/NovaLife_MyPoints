@@ -3,7 +3,6 @@ using Life.Network;
 using Life.UI;
 using MyPoints.Components.OutfitPoint;
 using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using UIPanelManager;

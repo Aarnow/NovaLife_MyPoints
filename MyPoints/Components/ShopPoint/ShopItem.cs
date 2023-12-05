@@ -24,7 +24,7 @@ namespace MyPoints.Components.ShopPoint
             ItemId = itemId;
             Buyable = buyable;
             Resellable = resellable;
-            Data = itemWithData(itemId) ? "{\"statePercentage\":100.0}" : null;
+            Data = itemWithData(itemId);
 
             Item = LifeManager.instance.item.GetItem(itemId);
             ItemIconId = getIconId(itemId);
@@ -36,10 +36,13 @@ namespace MyPoints.Components.ShopPoint
             return iconId >= 0 ? iconId : getIconId(1112);
         }
 
-        private bool itemWithData(int itemId)
+        private string itemWithData(int itemId)
         {
-            int[] allowedItemIDs = { 3, 4, 5 };
-            return allowedItemIDs.Contains(itemId) ? true : false;
+            int[] foodItemIDs = { 1, 2 };
+            int[] mechanicItemIDs = { 3, 4, 5 };
+            if (foodItemIDs.Contains(itemId)) return "";
+            else if (mechanicItemIDs.Contains(itemId)) return "{\"statePercentage\":100.0}";
+            else return null;
         }
     }
 }
