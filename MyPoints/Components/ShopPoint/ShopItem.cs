@@ -40,7 +40,7 @@ namespace MyPoints.Components.ShopPoint
         {
             int[] foodItemIDs = { 1, 2 };
             int[] mechanicItemIDs = { 3, 4, 5 };
-            if (foodItemIDs.Contains(itemId)) return "";
+            if (foodItemIDs.Contains(itemId)) return "{\"cookedPercentage\":0,\"expireTimestamp\":0}";
             else if (mechanicItemIDs.Contains(itemId)) return "{\"statePercentage\":100.0}";
             else return null;
         }

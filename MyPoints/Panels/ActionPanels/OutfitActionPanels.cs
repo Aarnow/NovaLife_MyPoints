@@ -3,6 +3,7 @@ using Life.Network;
 using Life.UI;
 using MyPoints.Components.OutfitPoint;
 using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UIPanelManager;
@@ -32,8 +33,7 @@ namespace MyPoints.Panels.ActionPanels
             });
             panel.AddButton("Retirer", (ui) =>
             {
-                CharacterCustomizationSetup skin = JsonConvert.DeserializeObject<CharacterCustomizationSetup>(player.character.Skin);
-                player.setup.RpcSkinChange(skin);
+                pOutfit.UnequipOutfit(player, player.character.Skin);
                 PanelManager.Notification(player, $"Succès", $"Vous venez de retrouver vos vêtements d'origine", Life.NotificationManager.Type.Success);
             });
             panel.AddButton("Service", (ui) =>
