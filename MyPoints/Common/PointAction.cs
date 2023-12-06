@@ -18,16 +18,18 @@ namespace MyPoints.Common
 
         public abstract void OnPlayerTrigger(Player player);
         public abstract void CreateData(Player player);
-        public abstract void UpdateProps(string json);
+        public abstract void UpdateProps(string json);       
         public abstract object Clone();
         public void Save()
         {
             int number = 0;
+            string slug = Slug;
             string filePath;
 
             do
             {
-                filePath = Path.Combine(Main.dataPath + "/" + ActionKeys, $"{ActionKeys}_{Slug}_{number}.json");
+                Slug = $"{slug}_{number}";
+                filePath = Path.Combine(Main.dataPath + "/" + ActionKeys, $"{ActionKeys}_{Slug}.json");
                 number++;
             } while (File.Exists(filePath));
 

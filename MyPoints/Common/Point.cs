@@ -55,6 +55,7 @@ namespace MyPoints.Common
                 if (Action != null)
                 {
                     Action.UpdateProps(json);
+
                     NCheckpoint newCheckpoint = new NCheckpoint(player.setup.netId, Position, delegate
                     {
                         if (IsOpen)
