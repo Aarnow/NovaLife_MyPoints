@@ -19,6 +19,11 @@ namespace MyPoints.Common
         public abstract void OnPlayerTrigger(Player player);
         public abstract void CreateData(Player player);
         public abstract void UpdateProps(string json);       
+
+        public string GetSlug()
+        {
+            return Slug.LastIndexOf('_') != -1 ? Slug.Substring(0, Slug.LastIndexOf('_')) : Slug;
+        }
         public abstract object Clone();
         public void Save()
         {

@@ -12,7 +12,7 @@ namespace MyPoints.Panels.ActionPanels
     {
         public static void OpenShop(Player player, PShop pShop)
         {
-            UIPanel panel = new UIPanel("MyPoints Menu", UIPanel.PanelType.TabPrice).SetTitle($"{pShop.Slug}");
+            UIPanel panel = new UIPanel("MyPoints Menu", UIPanel.PanelType.TabPrice).SetTitle($"{pShop.GetSlug()}");
 
             foreach ((ShopItem shopItem, int index) in pShop.ShopItems.Select((shopItem, index) => (shopItem, index)))
             {

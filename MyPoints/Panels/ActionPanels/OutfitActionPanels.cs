@@ -1,9 +1,6 @@
-﻿using Life.InventorySystem;
-using Life.Network;
+﻿using Life.Network;
 using Life.UI;
 using MyPoints.Components.OutfitPoint;
-using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using UIPanelManager;
@@ -16,7 +13,7 @@ namespace MyPoints.Panels.ActionPanels
         {
             List<Outfit> outfits = pOutfit.Outfits.Where(o => o.SexId == player.character.SexId).ToList();
 
-            UIPanel panel = new UIPanel("MyPoints Menu", UIPanel.PanelType.Tab).SetTitle($"{pOutfit.Slug}");
+            UIPanel panel = new UIPanel("MyPoints Menu", UIPanel.PanelType.Tab).SetTitle($"{pOutfit.GetSlug()}");
 
             foreach((Outfit outfit, int index) in outfits.Select((outfit, index) => (outfit, index)))
             {

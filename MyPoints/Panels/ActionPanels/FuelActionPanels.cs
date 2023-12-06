@@ -11,13 +11,13 @@ namespace MyPoints.Panels.ActionPanels
     {
         public static void OpenFuelCan(Player player, PFuel pFuel)
         {
-            UIPanel panel = new UIPanel("MyPoints Panel", UIPanel.PanelType.Text).SetTitle($"{pFuel.Slug}");
+            UIPanel panel = new UIPanel("MyPoints Panel", UIPanel.PanelType.Text).SetTitle($"{pFuel.GetSlug()}");
 
             panel.text = $"{pFuel.CurrentQuantity} / {pFuel.Capacity}L";
 
             panel.AddButton("Ajouter", (ui) =>
             {
-                string json = File.ReadAllText(Main.dataPath + "/" + pFuel.ActionKeys + "/" + $"{pFuel.ActionKeys}_{pFuel.Slug}.json");
+                string json = File.ReadAllText(Main.dataPath + "/" + pFuel.ActionKeys + "/" + $"{pFuel.ActionKeys}_{pFuel.GetSlug()}.json");
                 pFuel.UpdateProps(json);
 
                 if (pFuel.CurrentQuantity >= pFuel.Capacity) PanelManager.Notification(player, "Erreur", "La cuve d'essence est pleine !", NotificationManager.Type.Error);
@@ -36,7 +36,7 @@ namespace MyPoints.Panels.ActionPanels
             });
             panel.AddButton("Récupérer", (ui) =>
             {
-                string json = File.ReadAllText(Main.dataPath + "/" + pFuel.ActionKeys + "/" + $"{pFuel.ActionKeys}_{pFuel.Slug}.json");
+                string json = File.ReadAllText(Main.dataPath + "/" + pFuel.ActionKeys + "/" + $"{pFuel.ActionKeys}_{pFuel.GetSlug()}.json");
                 pFuel.UpdateProps(json);
 
                 if (pFuel.CurrentQuantity < 0) PanelManager.Notification(player, "Erreur", "La cuve d'essence est vide !", NotificationManager.Type.Error);

@@ -9,7 +9,7 @@ namespace MyPoints.Panels.ActionPanels
     {
         public static void ShowTextPanel(Player player, PText pText)
         {
-            UIPanel panel = new UIPanel("MyPoints Panel", UIPanel.PanelType.Text).SetTitle($"{pText.Slug}");
+            UIPanel panel = new UIPanel("MyPoints Panel", UIPanel.PanelType.Text).SetTitle($"{pText.GetSlug()}");
 
             panel.text = $"{pText.Content}";
 

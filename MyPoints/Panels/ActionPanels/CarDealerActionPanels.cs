@@ -12,7 +12,7 @@ namespace MyPoints.Panels.ActionPanels
     {
         public static void CarDealerVehiculeList(Player player, PCarDealer pCarDealer)
         {
-            UIPanel panel = new UIPanel("MyPoints Menu", UIPanel.PanelType.TabPrice).SetTitle($"{pCarDealer.Slug}");
+            UIPanel panel = new UIPanel("MyPoints Menu", UIPanel.PanelType.TabPrice).SetTitle($"{pCarDealer.GetSlug()}");
 
             foreach ((CarDealerVehicle carDealerVehicle, int index) in pCarDealer.CarDealerVehicles.Select((carDealerVehicle, index) => (carDealerVehicle, index)))
             {
