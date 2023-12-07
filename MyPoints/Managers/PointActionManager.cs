@@ -6,6 +6,7 @@ using MyPoints.Components.OutfitPoint;
 using MyPoints.Interfaces;
 using System.Collections.Generic;
 using MyPoints.Components.FuelPoint;
+using MyPoints.Components.TrashPoint;
 
 public abstract class PointActionManager
 {
@@ -17,6 +18,7 @@ public abstract class PointActionManager
         CarDealer,
         Outfit,
         Fuel,
+        Trash,
     }
 
     public static Dictionary<PointActionKeys, IPointAction> Actions = new Dictionary<PointActionKeys, IPointAction>
@@ -27,6 +29,7 @@ public abstract class PointActionManager
         { PointActionKeys.CarDealer, new PCarDealer()},
         { PointActionKeys.Outfit, new POutfit()},
         { PointActionKeys.Fuel, new PFuel()},
+        { PointActionKeys.Trash, new PTrash()},
     };
 
     public static IPointAction GetActionByKey(PointActionKeys key)
