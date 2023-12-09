@@ -5,6 +5,7 @@ using MyPoints.Panels.DPanels;
 using MyPoints.Panels.ActionPanels;
 using MyPoints.Common;
 using static PointActionManager;
+using System.IO;
 
 namespace MyPoints.Components.ShopPoint 
 {
@@ -29,9 +30,9 @@ namespace MyPoints.Components.ShopPoint
             PShop pShop = new PShop();
             ShopDataPanels.ShopCreationInstructions(player, pShop);
         }
-        public override void UpdateProps(string json)
+        public override void UpdateProps()
         {
-            JsonConvert.PopulateObject(json, this);
+            JsonConvert.PopulateObject(File.ReadAllText(Main.dataPath + "/" + ActionKeys + "/" + $"{ActionKeys}_{Slug}.json"), this);
         }
 
         public override object Clone()

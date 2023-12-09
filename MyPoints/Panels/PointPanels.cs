@@ -59,6 +59,7 @@ namespace MyPoints.Panels
                 PanelManager.NextPanel(player, ui, () =>
                 {
                     pointDto.DataFilePath = path + "/" + ui.lines[ui.selectedTab].name + ".json";
+
                     SetAllowedBizs(player, pointDto);
                 });
             });

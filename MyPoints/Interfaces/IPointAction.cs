@@ -10,7 +10,8 @@ namespace MyPoints.Interfaces
         string Slug { get; set; }
         void OnPlayerTrigger(Player player);
         void CreateData(Player player);
-        void UpdateProps(string json);
+        void UpdateProps();
+        void InitProps(string json);
         void Save();
     }
 }

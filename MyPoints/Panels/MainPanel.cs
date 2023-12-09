@@ -9,7 +9,7 @@ namespace MyPoints.Panels
     {
         public static void OpenMyPointsMenu(Player player)
         {
-            UIPanel panel = new UIPanel("MyPoints Menu", UIPanel.PanelType.Tab).SetTitle($"MyPoints Menu");
+            UIPanel panel = new UIPanel("MyPoints Menu", UIPanel.PanelType.Tab).SetTitle($"MyPoints (v1.0.0)");
 
             panel.AddTabLine("Ajouter un point", (ui) => ui.selectedTab = 0);
             panel.AddTabLine("Supprimer un point", (ui) => ui.selectedTab = 1);

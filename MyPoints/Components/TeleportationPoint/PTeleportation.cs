@@ -5,6 +5,7 @@ using MyPoints.Common;
 using MyPoints.Panels.DPanels;
 using static PointActionManager;
 using UnityEngine;
+using System.IO;
 
 namespace MyPoints.Components.TeleportationPoint
 {
@@ -35,9 +36,9 @@ namespace MyPoints.Components.TeleportationPoint
             TeleportationDataPanels.SetTeleportationSlug(player, pTeleportation);
         }
 
-        public override void UpdateProps(string json)
+        public override void UpdateProps()
         {
-            JsonConvert.PopulateObject(json, this);
+            JsonConvert.PopulateObject(File.ReadAllText(Main.dataPath + "/" + ActionKeys + "/" + $"{ActionKeys}_{Slug}.json"), this);
         }
 
         public void SetPositionAxis(Vector3 position)

@@ -31,9 +31,9 @@ namespace MyPoints.Components.FuelPoint
             FuelDataPanels.SetFuelCapacity(player, pFuel);
         }
 
-        public override void UpdateProps(string json)
+        public override void UpdateProps()
         {
-            JsonConvert.PopulateObject(json, this);
+            JsonConvert.PopulateObject(File.ReadAllText(Main.dataPath + "/" + ActionKeys + "/" + $"{ActionKeys}_{Slug}.json"), this);
         }
 
         public override object Clone()

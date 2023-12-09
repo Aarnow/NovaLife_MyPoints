@@ -4,6 +4,7 @@ using MyPoints.Common;
 using MyPoints.Panels.ActionPanels;
 using MyPoints.Panels.DPanels;
 using static PointActionManager;
+using System.IO;
 
 namespace MyPoints.Components.TextPoint
 {
@@ -30,9 +31,9 @@ namespace MyPoints.Components.TextPoint
             TextDataPanels.SetTextSlug(player, pText);
         }
 
-        public override void UpdateProps(string json)
+        public override void UpdateProps()
         {
-            JsonConvert.PopulateObject(json, this);
+            JsonConvert.PopulateObject(File.ReadAllText(Main.dataPath + "/" + ActionKeys + "/" + $"{ActionKeys}_{Slug}.json"), this);
         }
 
         public override object Clone()

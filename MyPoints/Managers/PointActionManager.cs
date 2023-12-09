@@ -7,6 +7,7 @@ using MyPoints.Interfaces;
 using System.Collections.Generic;
 using MyPoints.Components.FuelPoint;
 using MyPoints.Components.TrashPoint;
+using MyPoints.Components.PollPoint;
 
 public abstract class PointActionManager
 {
@@ -19,6 +20,7 @@ public abstract class PointActionManager
         Outfit,
         Fuel,
         Trash,
+        Poll
     }
 
     public static Dictionary<PointActionKeys, IPointAction> Actions = new Dictionary<PointActionKeys, IPointAction>
@@ -30,6 +32,7 @@ public abstract class PointActionManager
         { PointActionKeys.Outfit, new POutfit()},
         { PointActionKeys.Fuel, new PFuel()},
         { PointActionKeys.Trash, new PTrash()},
+        { PointActionKeys.Poll, new PPoll()},
     };
 
     public static IPointAction GetActionByKey(PointActionKeys key)

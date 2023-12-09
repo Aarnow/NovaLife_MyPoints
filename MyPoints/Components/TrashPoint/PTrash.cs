@@ -5,6 +5,7 @@ using MyPoints.Panels.DPanels;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using static PointActionManager;
 
 namespace MyPoints.Components.TrashPoint
@@ -30,9 +31,9 @@ namespace MyPoints.Components.TrashPoint
             TrashDataPanels.SetTrashAllowedBizs(player, pTrash);
         }
 
-        public override void UpdateProps(string json)
+        public override void UpdateProps()
         {
-            JsonConvert.PopulateObject(json, this);
+            JsonConvert.PopulateObject(File.ReadAllText(Main.dataPath + "/" + ActionKeys + "/" + $"{ActionKeys}_{Slug}.json"), this);
         }
 
         public override object Clone()

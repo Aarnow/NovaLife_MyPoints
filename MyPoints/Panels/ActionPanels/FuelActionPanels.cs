@@ -2,7 +2,6 @@
 using Life.Network;
 using Life.UI;
 using MyPoints.Components.FuelPoint;
-using System.IO;
 using UIPanelManager;
 
 namespace MyPoints.Panels.ActionPanels
@@ -11,14 +10,15 @@ namespace MyPoints.Panels.ActionPanels
     {
         public static void OpenFuelCan(Player player, PFuel pFuel)
         {
+            pFuel.UpdateProps();
+
             UIPanel panel = new UIPanel("MyPoints Panel", UIPanel.PanelType.Text).SetTitle($"{pFuel.GetSlug()}");
 
             panel.text = $"{pFuel.CurrentQuantity} / {pFuel.Capacity}L";
 
             panel.AddButton("Ajouter", (ui) =>
             {
-                string json = File.ReadAllText(Main.dataPath + "/" + pFuel.ActionKeys + "/" + $"{pFuel.ActionKeys}_{pFuel.GetSlug()}.json");
-                pFuel.UpdateProps(json);
+                pFuel.UpdateProps();
 
                 if (pFuel.CurrentQuantity >= pFuel.Capacity) PanelManager.Notification(player, "Erreur", "La cuve d'essence est pleine !", NotificationManager.Type.Error);
                 else
@@ -36,10 +36,9 @@ namespace MyPoints.Panels.ActionPanels
             });
             panel.AddButton("Récupérer", (ui) =>
             {
-                string json = File.ReadAllText(Main.dataPath + "/" + pFuel.ActionKeys + "/" + $"{pFuel.ActionKeys}_{pFuel.GetSlug()}.json");
-                pFuel.UpdateProps(json);
+                pFuel.UpdateProps();
 
-                if (pFuel.CurrentQuantity < 0) PanelManager.Notification(player, "Erreur", "La cuve d'essence est vide !", NotificationManager.Type.Error);
+                if (pFuel.CurrentQuantity <= 0) PanelManager.Notification(player, "Erreur", "La cuve d'essence est vide !", NotificationManager.Type.Error);
                 else
                 {
                     if (player.setup.inventory.RemoveItem(1183, 1, false))

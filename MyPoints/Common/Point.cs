@@ -54,7 +54,7 @@ namespace MyPoints.Common
                 IPointAction Action = GetActionByKey(ActionKey);
                 if (Action != null)
                 {
-                    Action.UpdateProps(json);
+                    Action.InitProps(json);
 
                     NCheckpoint newCheckpoint = new NCheckpoint(player.setup.netId, Position, delegate
                     {
@@ -77,7 +77,7 @@ namespace MyPoints.Common
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Erreur lors de la lecture du fichier JSON : {ex.Message}");
+                Console.WriteLine($"Erreur lors de la lecture du fichier JSON (PointPanel): {ex.Message}");
                 return null;
             }
         }
