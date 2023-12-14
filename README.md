@@ -1,5 +1,5 @@
 ![Nom de l'image](https://cdn.discordapp.com/attachments/517055230756782095/1180104735043375114/mypoints-ico.png?ex=657c352e&is=6569c02e&hm=883525cbce732f03f64e71da10798e97d365b3dd28150503be73827db7e2cb03&)
-# ✧ Novalife Plugin MyPoints v0.7.0
+# ✧ Novalife Plugin MyPoints
 
 Ce plugin permet de créer différents types de points bleus directement en jeu.
 Il dépend des plugins UIPanelManager et MyCloths pour fonctionner.
